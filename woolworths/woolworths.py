@@ -5,12 +5,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
 from scrapy.selector import Selector
+from selenium.webdriver.chrome.service import Service
 import logging
-import time
 import csv
+import time
 
 logging.basicConfig(level=logging.INFO)
-driver_path = "../utils/chromedriver"
+DRIVER_PATH = "../utils/chromedriver"
 
 
 def get_categories(driver):
@@ -28,7 +29,7 @@ def get_categories(driver):
     )
     category_elements = driver.find_elements(
         by=By.XPATH,
-        value="//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials'))]",
+        value="//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials')) and not(contains(text(), 'Front of Store'))]",
     )
     category_dict = {}
     logging.info("Getting Categories and URL")
@@ -84,10 +85,9 @@ def extract_products(category, page):
     return page_products
 
 
-def parse_category(driver, category, file):
-    """Scrape a category and outputs it in file"""
-
-    logging.info(f"{category.upper()} SCRAPING")
+def scrape_category(driver, category, category_url, file):
+    """Scrape category and outputs it in file"""
+    driver.get(category_url)
 
     with open(file, "w") as csv_file:
         writer = csv.writer(csv_file)
@@ -97,8 +97,10 @@ def parse_category(driver, category, file):
         page_num = 1
         while True:
             logging.info(f"Extracting products from {category} page {page_num}...")
+
+            time.sleep(25)  #  wait for products to load
             try:
-                next_page = WebDriverWait(driver, 60).until(
+                next_page = WebDriverWait(driver, 30).until(
                     EC.element_to_be_clickable(
                         (By.XPATH, "//a[@class='paging-next ng-star-inserted']")
                     )
@@ -108,11 +110,10 @@ def parse_category(driver, category, file):
                 logging.info(f"Last page in {category}")
                 last_page = True
 
-            driver.implicitly_wait(25)  #  wait for products to load
-
             page_products = extract_products(
                 category, driver.page_source.encode("utf-8")
             )
+
             writer.writerows(page_products)
 
             page_num += 1
@@ -125,16 +126,18 @@ def parse_category(driver, category, file):
             action.perform()
 
 
-def scrape_woolworths():
-    driver = webdriver.Chrome()
+def scrape_woolworths(driver):
     categories = get_categories(driver)
 
     for category, category_url in categories.items():
-        driver.get(category_url)
-
-        category_filename = f"{''.join(category.split())}_woolworths.csv"
-        parse_category(driver, category, category_filename)
+        filename = f"woolworths_{''.join(category.split()).lower()}.csv"
+        scrape_category(driver, category, category_url, filename)
 
 
 if __name__ == "__main__":
-    scrape_woolworths()
+    # driver configs
+    service = Service(DRIVER_PATH)
+    driver = webdriver.Chrome(service=service)
+    driver.maximize_window()  # more products are rendered in bigger window
+
+    scrape_woolworths(driver)
