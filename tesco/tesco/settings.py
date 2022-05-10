@@ -21,10 +21,8 @@ ROBOTSTXT_OBEY = True
 
 
 # Selenium config
-from shutil import which
-
 SELENIUM_DRIVER_NAME = "chrome"
-SELENIUM_DRIVER_EXECUTABLE_PATH = which("chromedriver")
+SELENIUM_DRIVER_EXECUTABLE_PATH = "../utils/chromedriver"
 SELENIUM_DRIVER_ARGUMENTS = ["--head"]
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)

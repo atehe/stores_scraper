@@ -61,6 +61,7 @@ class ProductsSpider(scrapy.Spider):
 
             yield {
                 "Name": name,
+                "Category": category,
                 "Product ID": product_id,
                 "Product URL": abs_url,
                 "Price": price,
