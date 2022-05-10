@@ -1,17 +1,21 @@
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from scrapy.selector import Selector
 from selenium.webdriver.common.action_chains import ActionChains
-import logging
-from selenium import webdriver
-import json
 from selenium.webdriver.chrome.options import Options
+from scrapy.selector import Selector
+import logging
 import time
 import csv
 
+logging.basicConfig(level=logging.INFO)
+driver_path = "../utils/chromedriver"
+
 
 def get_categories(driver):
+    """Returns the a dictionary of the category an their url"""
+
     driver.get("https://www.woolworths.com.au")
 
     WebDriverWait(driver, 60).until(
@@ -27,6 +31,7 @@ def get_categories(driver):
         value="//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials'))]",
     )
     category_dict = {}
+    logging.info("Getting Categories and URL")
     for element in category_elements:
         url = element.get_attribute("href")
         category = element.text
@@ -35,6 +40,8 @@ def get_categories(driver):
 
 
 def extract_product_id(url):
+    """Returns the product id from the product URL"""
+
     try:
         start_index = url.index("productdetails/") + 15
         end_index = url[start_index:].index("/")
@@ -43,8 +50,10 @@ def extract_product_id(url):
         return url
 
 
-def extract_products(page):
-    page_response = Selector(page)
+def extract_products(category, page):
+    """Returns list of tuples containing the product details in a page"""
+
+    page_response = Selector(text=page)
     products = page_response.xpath("//div[@class='shelfProductTile-information']")
 
     page_products = []
@@ -65,44 +74,67 @@ def extract_products(page):
         cup_price = product.xpath(
             ".//div[contains(@class,'shelfProductTile-cupPrice')]/text()"
         ).get()
+        price = ".".join([str(price_dollar), str(price_cent)])
+        product_url = f"http://www.woolworths.com.au{url}"
+        product_id = extract_product_id(url)
 
         page_products.append(
-            {
-                "Name": name,
-                "Category": "Dairy, Egg & Fridge",
-                "Price": ".".join([str(price_dollar), str(price_cent)]),
-                "Cup Price": cup_price,
-                "Product_URL": f"http://www.woolworths.com.au{url}",
-                "Product_ID": extract_product_id(url),
-            }
+            (name, category, price, cup_price, product_url, product_id)
         )
-        return page_products
+    return page_products
 
 
-def parse_category(driver, file):
-    page_num = 1
-    while True:
-        logging.debug(f"Extracting products from page {page_num}")
-        try:
-            next_page = WebDriverWait(driver, 60).until(
-                EC.element_to_be_clickable(
-                    (By.XPATH, "//a[@class='paging-next ng-star-inserted']")
+def parse_category(driver, category, file):
+    """Scrape a category and outputs it in file"""
+
+    logging.info(f"{category.upper()} SCRAPING")
+
+    with open(file, "w") as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerow(
+            ("Name", "Category", "Price", "Cup Price", "Product_URL", "Product_ID")
+        )
+        page_num = 1
+        while True:
+            logging.info(f"Extracting products from {category} page {page_num}...")
+            try:
+                next_page = WebDriverWait(driver, 60).until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH, "//a[@class='paging-next ng-star-inserted']")
+                    )
                 )
+                last_page = False
+            except:
+                logging.info(f"Last page in {category}")
+                last_page = True
+
+            driver.implicitly_wait(25)  #  wait for products to load
+
+            page_products = extract_products(
+                category, driver.page_source.encode("utf-8")
             )
-            last_page = False
-        except:
-            logging.info("LAST PAGE")
-            last_page = True
+            writer.writerows(page_products)
 
-        time.sleep(25)  #  wait for products to load
-        # driver.implicitly_wait(25)
+            page_num += 1
 
-        page_products = extract_products(driver.page_source.encode("utf-8"))
-        page_num += 1
+            if last_page:
+                break
+            action = ActionChains(driver)
+            action.move_to_element(to_element=next_page)
+            action.click()
+            action.perform()
 
-        if last_page:
-            break
-        action = ActionChains(driver)
-        action.move_to_element(to_element=next_page)
-        action.click()
-        action.perform()
+
+def scrape_woolworths():
+    driver = webdriver.Chrome()
+    categories = get_categories(driver)
+
+    for category, category_url in categories.items():
+        driver.get(category_url)
+
+        category_filename = f"{''.join(category.split())}_woolworths.csv"
+        parse_category(driver, category, category_filename)
+
+
+if __name__ == "__main__":
+    scrape_woolworths()
