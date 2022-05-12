@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = "tesco.spiders"
 # USER_AGENT = 'tesco (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 
 # Selenium config
