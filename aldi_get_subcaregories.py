@@ -28,32 +28,33 @@ except:
     driver.execute_script("arguments[0].click();", harmburger_menu)
 # harmburger_menu.click()
 time.sleep(2)
-nav_items = driver.find_elements(
+category_items = driver.find_elements(
     by=By.XPATH,
     value="//li[@class='header__item header__item--nav slim-fit js-list-toggle text-uppercase']",
 )
-print(nav_items)
-print(len(nav_items))
 
-for nav_item in nav_items:
+
+for category_item in category_items:
+
     time.sleep(1)
+    category = category_item.find_element(
+        by=By.XPATH, value=".//span[@class='linkName ']"
+    ).text
+    print(category.upper())
     try:
-        nav_item.click()
+        category_item.click()
     except:
-        driver.execute_script("arguments[0].click();", nav_item)
+        driver.execute_script("arguments[0].click();", category_item)
     time.sleep(1)
 
-    subcategory_groups = driver.find_elements(
+    category_groups = driver.find_elements(
         by=By.XPATH,
         value="//ul[@class='header__list header__list--secondary js-list js-second-level-submenu expanded']/li[@class='header__item header__item--secondary single-fourth js-list-toggle js-list-dropdown avoid-click-lg']",
     )
-    print(len(subcategory_groups))
-    for subcategory_group in subcategory_groups:
-        subcategory_group_name = subcategory_group.find_element(
-            by=By.XPATH, value="./div/a"
-        ).text
-        print(subcategory_group_name)
-        subcategories = subcategory_group.find_elements(by=By.XPATH, value="./ul//li")
+    for category_group in category_groups:
+        group_name = category_group.find_element(by=By.XPATH, value="./div/a").text
+        print(group_name)
+        subcategories = category_group.find_elements(by=By.XPATH, value="./ul//li")
         for subcategory_elem in subcategories:
             try:
                 subcategory = subcategory_elem.find_element(
