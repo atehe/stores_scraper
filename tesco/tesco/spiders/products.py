@@ -75,7 +75,7 @@ class ProductsSpider(scrapy.Spider):
                     }
                 )
 
-        for subcategory_dict in subcategory_list:
+        for subcategory_dict in subcategory_list[:2]:
             yield SeleniumRequest(
                 url=subcategory_dict["subcategory_url"],
                 callback=self.get_products_page_url,
@@ -131,9 +131,11 @@ class ProductsSpider(scrapy.Spider):
                 "Price": price,
                 "Cup Price": cup_price,
             }
-        # next_page = response.xpath('//a[@title="Go to results page"]/@href').get()
-        # if next_page:
-        #     url = f"https://www.tesco.com{next_page}"
-        #     yield SeleniumRequest(
-        #         url=url, callback=self.parse, meta={"category": category}
-        #     )
+        next_page = response.xpath('//a[@title="Go to results page"]/@href').get()
+        if next_page:
+            url = f"https://www.tesco.com{next_page}"
+            yield SeleniumRequest(
+                url=url,
+                callback=self.parse_products,
+                meta={"category": category, "subcategory": subcategory},
+            )
