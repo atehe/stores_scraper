@@ -75,7 +75,7 @@ class ProductsSpider(scrapy.Spider):
                     }
                 )
 
-        for subcategory_dict in subcategory_list[:2]:
+        for subcategory_dict in subcategory_list:
             yield SeleniumRequest(
                 url=subcategory_dict["subcategory_url"],
                 callback=self.get_products_page_url,
