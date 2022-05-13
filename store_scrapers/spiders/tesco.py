@@ -71,7 +71,7 @@ class TescoSpider(scrapy.Spider):
                     }
                 )
 
-        for subcategory_dict in subcategory_list:
+        for subcategory_dict in subcategory_list[:2]:
             yield SeleniumRequest(
                 url=subcategory_dict["subcategory_url"],
                 callback=self.get_products_page_url,

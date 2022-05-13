@@ -4,6 +4,31 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+
+def excluded_keyword_in(keyword):
+    excluded_tags = [
+        "all ",
+        " all",
+        "offer",
+        "about",
+        "price",
+        "inspired",
+        "best of",
+    ]
+    for tag in excluded_tags:
+        if tag in keyword:
+            return True
+    return False
+
+
+def click(element, driver):
+    try:
+        element.click()
+    except:
+        driver.execute_script("arguments[0].click();", element)
+    time.sleep(1.5)
+
+
 driver = webdriver.Chrome()
 
 driver.get("https://www.aldi.co.uk/")
@@ -22,30 +47,23 @@ harmburger_menu = wait.until(
         (By.XPATH, "//span[@class='sr-only' and contains(text(), 'Aldi Menu')]")
     )
 )
-try:
-    harmburger_menu.click()
-except:
-    driver.execute_script("arguments[0].click();", harmburger_menu)
-# harmburger_menu.click()
-time.sleep(2)
+click(harmburger_menu, driver)
+
+
 category_items = driver.find_elements(
     by=By.XPATH,
     value="//li[@class='header__item header__item--nav slim-fit js-list-toggle text-uppercase']",
 )
 
+url_list = []
+for category_item in category_items[:-1]:
 
-for category_item in category_items:
-
-    time.sleep(1)
     category = category_item.find_element(
         by=By.XPATH, value=".//span[@class='linkName ']"
     ).text
     print(category.upper())
-    try:
-        category_item.click()
-    except:
-        driver.execute_script("arguments[0].click();", category_item)
-    time.sleep(1)
+
+    click(category_item, driver)
 
     category_groups = driver.find_elements(
         by=By.XPATH,
@@ -53,25 +71,38 @@ for category_item in category_items:
     )
     for category_group in category_groups:
         group_name = category_group.find_element(by=By.XPATH, value="./div/a").text
-        print(group_name)
+
+        if excluded_keyword_in(group_name.lower()):
+            continue
+        print(group_name.upper())
+
         subcategories = category_group.find_elements(by=By.XPATH, value="./ul//li")
         for subcategory_elem in subcategories:
             try:
                 subcategory = subcategory_elem.find_element(
                     by=By.XPATH, value=".//a"
                 ).text
+                subcategory_url = subcategory_elem.find_element(
+                    by=By.XPATH, value=".//a"
+                ).get_attribute("href")
             except:
                 continue
-            subcategory_url = subcategory_elem.find_element(
-                by=By.XPATH, value="./a"
-            ).get_attribute("href")
-            print(subcategory, subcategory_url)
+
+            if excluded_keyword_in(subcategory.lower()):
+                continue
+            print(subcategory)
+            url_list.append(
+                {
+                    "category": category,
+                    "category_group": group_name,
+                    "subcategory": subcategory,
+                    "subcategory_url": subcategory_url,
+                }
+            )
 
     back_button = driver.find_element(
         by=By.XPATH, value="//div[@class='back_container js-menu-back']"
     )
-    time.sleep(1)
-    try:
-        back_button.click()
-    except:
-        driver.execute_script("arguments[0].click();", back_button)
+    click(back_button, driver)
+
+print(url_list)
