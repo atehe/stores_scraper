@@ -137,7 +137,7 @@ class AldiSpider(scrapy.Spider):
                 # wait_until=EC.element_to_be_clickable(
                 #     (By.CLASS_NAME, "category-item__wrapper-link js-product-link")
                 # ),
-                script="window.scrollTo(0, document.body.scrollHeight);",
+                script="document.getElementsByClassName('category-loadmore-cta')[0].click()",
             )
 
     def parse_products(self, response):
