@@ -26,7 +26,7 @@ def excluded_keyword_in(word):
 
 
 def click(element, driver):
-    """use javascript click if selenium click method fails"""
+    """Use javascript click if selenium click method fails"""
     try:
         element.click()
     except:
@@ -137,7 +137,7 @@ def load_all_products(url, driver):
         except:
             break
 
-    print("Loading complete")
+    logging.info("Page load complete")
     return driver.page_source
 
 
@@ -166,7 +166,6 @@ def extract_details(page, output_csv, category, subcategory, subcategory_group):
             ),
             extrasaction="ignore",
         )
-        dict_writer.writeheader()
 
         page_response = Selector(text=page.encode("utf8"))
 
