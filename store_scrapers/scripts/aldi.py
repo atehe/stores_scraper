@@ -3,24 +3,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from scrapy.selector import Selector
-from csv import DictWriter
+from csv import writer
 import time, logging
 
 logging.basicConfig(level=logging.INFO)
 
 
-def excluded_keyword_in(word):
-    excluded_tags = [
-        "all ",
-        " all",
-        "offer",
-        "about",
-        "price",
-        "inspired",
-        "best of",
-    ]
+def excluded_keyword_in(word, excluded_tags):
+    """Returns True if  any excluded tag is in word"""
     for tag in excluded_tags:
-        if tag in word:
+        if tag.lower() in word.lower():
             return True
     return False
 
@@ -49,6 +41,7 @@ def handle_cookies(driver):
 
 
 def get_subcategories(driver):
+    """Returns list of all subcategory (subcategory url, subcategory group and category) from menu"""
 
     driver.get("https://www.aldi.co.uk/")
 
@@ -65,6 +58,15 @@ def get_subcategories(driver):
         by=By.XPATH,
         value="//li[@class='header__item header__item--nav slim-fit js-list-toggle text-uppercase']",
     )
+    excluded_tags = [
+        "all ",
+        " all",
+        "offer",
+        "about",
+        "price",
+        "inspired",
+        "best of",
+    ]
 
     url_list = []
     for category_item in category_items[:-1]:
@@ -76,19 +78,19 @@ def get_subcategories(driver):
         click(category_item, driver)
         logging.info(f"Getting subcategories for {category.title()}")
 
-        subcategory_groups = driver.find_elements(
+        category_shopping_groups = driver.find_elements(
             by=By.XPATH,
             value="//ul[@class='header__list header__list--secondary js-list js-second-level-submenu expanded']/li[@class='header__item header__item--secondary single-fourth js-list-toggle js-list-dropdown avoid-click-lg']",
         )
-        for subcategory_group in subcategory_groups:
-            group_name = subcategory_group.find_element(
+        for category_shopping_group in category_shopping_groups:
+            group_name = category_shopping_group.find_element(
                 by=By.XPATH, value="./div/a"
             ).text
 
-            if excluded_keyword_in(group_name.lower()):
+            if excluded_keyword_in(group_name, excluded_tags):
                 continue
 
-            subcategories = subcategory_group.find_elements(
+            subcategories = category_shopping_group.find_elements(
                 by=By.XPATH, value="./ul//li"
             )
             for subcategory_elem in subcategories:
@@ -102,13 +104,13 @@ def get_subcategories(driver):
                 except:
                     continue
 
-                if excluded_keyword_in(subcategory.lower()):
+                if excluded_keyword_in(subcategory, excluded_tags):
                     continue
 
                 url_list.append(
                     {
                         "category": category,
-                        "subcategory_group": group_name,
+                        "category_shopping_group": group_name,
                         "subcategory": subcategory,
                         "subcategory_url": subcategory_url,
                     }
@@ -137,7 +139,7 @@ def load_all_products(url, driver):
         except:
             break
 
-    logging.info("Page load complete")
+    logging.debug("Page load complete")
     return driver.page_source
 
 
@@ -150,75 +152,77 @@ def extract_product_id(url):
         return url
 
 
-def extract_details(page, output_csv, category, subcategory, subcategory_group):
-    with open(output_csv, "a") as csv_file:
-        dict_writer = DictWriter(
-            csv_file,
-            fieldnames=(
-                "Name",
-                "Category",
-                "Subcategory",
-                "Subcategory  Group",
-                "Product ID",
-                "Product URL",
-                "Price",
-                "Rating",
-            ),
-            extrasaction="ignore",
+def extract_details(page, csv_writer, category, subcategory, category_shopping_group):
+
+    page_response = Selector(text=page.encode("utf8"))
+
+    products = page_response.xpath(
+        "//div[contains(@class,'hover-item category-item js-category-item')]"
+    )
+    if not products:
+        logging.info(f"Scraping {subcategory} in {category}...")
+    for product in products:
+        url = product.xpath(".//a[@class='category-item__link']/@href").get()
+        name = product.xpath(
+            ".//li[contains(@class,'category-item__title')]/text()"
+        ).get()
+        price = " ".join(
+            [
+                word.strip("\n").strip().strip("\n").strip()
+                for word in product.xpath(
+                    ".//li[contains(@class,'category-item__price')]/text()"
+                ).getall()
+            ]
         )
 
-        page_response = Selector(text=page.encode("utf8"))
+        rating = product.xpath(".//a[@itemprop='aggregateRating']/@aria-label").get()
+        product_id = extract_product_id(url)
 
-        products = page_response.xpath(
-            "//div[contains(@class,'hover-item category-item js-category-item')]"
-        )
-
-        for product in products:
-            url = product.xpath(".//a[@class='category-item__link']/@href").get()
-            name = product.xpath(
-                ".//li[contains(@class,'category-item__title')]/text()"
-            ).get()
-            price = " ".join(
-                [
-                    word.strip("\n").strip().strip("\n").strip()
-                    for word in product.xpath(
-                        ".//li[contains(@class,'category-item__price')]/text()"
-                    ).getall()
-                ]
+        csv_writer.writerow(
+            (
+                name,
+                category.title(),
+                subcategory,
+                category_shopping_group,
+                product_id,
+                url,
+                price,
+                rating,
             )
+        )
 
-            rating = product.xpath(
-                ".//a[@itemprop='aggregateRating']/@aria-label"
-            ).get()
-            product_id = extract_product_id(url)
 
-            dict_writer.writerow(
-                {
-                    "Name": name,
-                    "Category": category.title(),
-                    "Subcategory": subcategory,
-                    "Subcategory Group": subcategory_group,
-                    "Product ID": product_id,
-                    "Product URL": url,
-                    "Price": price,
-                    "Rating": rating,
-                }
+def scrape_aldi(driver, subcategories_url, output_csv):
+
+    with open(output_csv, "a") as csv_file:
+        csv_writer = writer(csv_file)
+        headers = (
+            "Name",
+            "Category",
+            "Subcategory",
+            "Category Shopping Group",
+            "Product ID",
+            "Product URL",
+            "Price",
+            "Rating",
+        )
+        csv_writer.writerow(headers)
+
+        for subcategory_dict in subcategories_url:
+            category = subcategory_dict["category"]
+            category_shopping_group = subcategory_dict["category_shopping_group"]
+            subcategory = subcategory_dict["subcategory"]
+            subcategory_url = subcategory_dict["subcategory_url"]
+
+            product_page = load_all_products(subcategory_url, driver)
+
+            extract_details(
+                product_page, csv_writer, category, subcategory, category_shopping_group
             )
 
 
 if __name__ == "__main__":
     driver = webdriver.Chrome()
     subcategories_url = get_subcategories(driver)
-    print(subcategories_url)
-    print(len(subcategories_url))
 
-    for subcategory_dict in subcategories_url:
-        category = subcategory_dict["category"]
-        subcategory_group = subcategory_dict["subcategory_group"]
-        subcategory = subcategory_dict["subcategory"]
-        subcategory_url = subcategory_dict["subcategory_url"]
-
-        product_page = load_all_products(subcategory_url, driver)
-        extract_details(
-            product_page, "aldi.csv", category, subcategory, subcategory_group
-        )
+    scrape_aldi(driver, subcategories_url, "aldi.csv")
