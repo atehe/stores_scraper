@@ -156,13 +156,14 @@ def extract_details(page, csv_writer, category, subcategory, category_shopping_g
 
     page_response = Selector(text=page.encode("utf8"))
 
-    products = page_response.xpath(
-        "//div[contains(@class,'hover-item category-item js-category-item')]"
-    )
-    if not products:
+    products = page_response.xpath("//div[contains(@class,'hover-item')]")
+    if products:
         logging.info(f"Scraping {subcategory} in {category}...")
     for product in products:
         url = product.xpath(".//a[@class='category-item__link']/@href").get()
+        if not url.startswith("http"):
+            url = f"https://www.aldi.co.uk{url}"
+
         name = product.xpath(
             ".//li[contains(@class,'category-item__title')]/text()"
         ).get()
