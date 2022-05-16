@@ -23,6 +23,14 @@ class WalmartPlaywrightSpider(scrapy.Spider):
             meta={"playwright": True, "playwright_include_page": True},
         )
 
-    def parse(self, response):
+    async def parse(self, response):
         open_in_browser(response)
-        # pass
+        page = response.meta["playwright_page"]
+        next_rel_rul = response.xpath("//a[@aria-label='Next Page']/@href").get()
+        url = f"https://www.walmart.com{next_rel_rul}"
+        await page.close()
+        yield scrapy.Request(
+            url=url,
+            meta={"playwright": True, "playwright_include_page": True},
+            callback=self.parse,
+        )
