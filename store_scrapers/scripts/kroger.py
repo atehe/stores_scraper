@@ -6,6 +6,8 @@ import time, logging
 from aldi import click, excluded_keyword_in
 from scrapy.selector import Selector
 from selenium.webdriver.common.action_chains import ActionChains
+import undetected_chromedriver as uc
+from csv import writer
 
 logging.basicConfig(level=logging.INFO)
 
@@ -73,7 +75,8 @@ def get_subcategories(driver):
     return url_list
 
 
-def extract_products(driver):
+def extract_products(driver, csv_writer, subcategory, category):
+    page_num = 1
 
     while True:
         WebDriverWait(driver, 20).until(
@@ -98,16 +101,33 @@ def extract_products(driver):
 
             price = product.xpath(".//data[@typeof='Price']/@value").get()
             product_id = extract_product_id(url)
-            # csv_writer.writerow((name, url, price, product_id))
-            print((name, url, price, product_id))
+            csv_writer.writerow(
+                (
+                    name,
+                    subcategory,
+                    category,
+                    product_id,
+                    url,
+                    price,
+                )
+            )
+            print(
+                (
+                    name,
+                    subcategory,
+                    category,
+                    product_id,
+                    url,
+                    price,
+                )
+            )
+
+        # pagination
         try:
-            print("hell0")
             next_page = driver.find_element(
                 by=By.XPATH, value="//button[@aria-label='Next page']"
             )
-            # print("hello")
-            # click(next_page)
-            # print("hello")
+            logging.info(f"Moving to page {page_num} in {category}")
             action = ActionChains(driver)
             action.move_to_element(to_element=next_page)
             action.click()
@@ -117,20 +137,20 @@ def extract_products(driver):
             break
 
 
-# try:
-#     next_page = driver.find_element(
-#         by=By.XPATH, value="//button[@aria-label='Next page']"
-#     )
-#     click(next_page)
-#     # continue
-# except:
-#     print("helllo")
-# break
-
-driver = webdriver.Chrome()
-
-driver.get("https://www.kroger.com/pl/snacks/1801200001")
-extract_products(driver)
+def scrape_kroger(driver, subcategories_dict, output_csv):
+    with open(output_csv, "a") as csv_file:
+        csv_writer = writer(output_csv)
+        headers = ("name", "subcategory", "category", "product_id", "url", "price")
+        csv_writer.writerow(headers)
 
 
-shop_all = "//a[contains(@class, 'ProminentLink') and not (contains(@href, '?'))]"
+if __name__ == "__main__":
+    # driver = webdriver.Chrome()
+    driver = uc.Chrome(version_main=100)
+    driver.maximize_window()
+
+    driver.get("https://www.kroger.com/pl/snacks/1801200001")
+    extract_products(driver)
+    # print
+
+    shop_all = "//a[contains(@class, 'ProminentLink') and not (contains(@href, '?'))]"
