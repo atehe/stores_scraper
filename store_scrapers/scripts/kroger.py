@@ -142,7 +142,8 @@ def extract_products(driver, csv_writer, subcategory, category):
         # pagination
         try:
             next_page = driver.find_element(
-                by=By.XPATH, value="//button[@aria-label='Next page']"
+                by=By.XPATH,
+                value="//button[@aria-label='Next page' and not(@disabled)]",
             )
             action = ActionChains(driver)
             action.move_to_element(to_element=next_page)
