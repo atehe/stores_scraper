@@ -112,14 +112,25 @@ def get_subcategories(driver):
 
 
 def extract_products(
-    driver, csv_writer, category, subcategory, extracted_url, log_object
+    driver,
+    csv_writer,
+    category,
+    subcategory,
+    subcategory_url,
+    extracted_urls,
+    log_object,
 ):
     """Write all products in a subcategory with a csv_writer to file"""
 
     page_num = 1
     while True:
-        if driver.current_url in extracted_url:
-            break
+        if driver.current_url in extracted_urls:
+            print("Extracted")
+            page_num += 1
+            next_url = f"{subcategory_url}?page={page_num}"
+            driver.get(next_url)
+            continue
+
         try:
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(
@@ -145,7 +156,7 @@ def extract_products(
                     time.sleep(random.randint(25, 45))
                     # driver = None
                     # driver = uc.Chrome(version_main=100, options=OPTS)
-                    driver.get_last(last_url)
+                    driver.get(last_url)
                 else:
                     # refresh page if products doesn't load
                     driver.refresh()
@@ -231,14 +242,13 @@ def scrape_kroger(driver, subcategories_list, output_csv, log_file):
 
     # reading extracted pages/url
     if not os.path.exists(log_file):
-        with open(log_file, "x") as log_object:
-            extracted_url = []
+        with open(log_file, "w") as log_object:
+            extracted_urls = []
 
     else:
 
         with open(log_file, "r") as log_object:
-            extracted_url = log_object.read().splitlines()
-            print(extracted_url)
+            extracted_urls = log_object.read().splitlines()
 
     # opening csv and log file for extracted products and extracted url/page to be written to
     with open(output_csv, "a") as csv_file, open(log_file, "a") as log_object:
@@ -253,12 +263,18 @@ def scrape_kroger(driver, subcategories_list, output_csv, log_file):
 
             if (
                 subcategory in extracted_subcategories
-                or subcategory_url in extracted_url
+                or subcategory_url in extracted_urls
             ):
                 continue
             driver.get(subcategory_url)
             extract_products(
-                driver, csv_writer, category, subcategory, extracted_url, log_object
+                driver,
+                csv_writer,
+                category,
+                subcategory,
+                subcategory_url,
+                extracted_urls,
+                log_object,
             )
 
 
