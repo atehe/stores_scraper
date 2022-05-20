@@ -45,7 +45,7 @@ def get_subcategories(driver):
     while navigating through the harmburger menu
     """
 
-    # load list from previous extraction
+    # load subcategories url list from previous extraction
     if os.path.exists("./utils/kroger/subcatecories_url.json"):
         with open("./utils/kroger/subcatecories_url.json") as url_list:
             return json.load(url_list)
@@ -69,7 +69,7 @@ def get_subcategories(driver):
         "all ",
         " all",
         "order ",
-    ]  # prevents category/promational subcategory to be added to list
+    ]  # prevents major category/promational subcategory to be added as subcategory url
     url_list = []
     for i, _ in enumerate(category_items):
         category = category_items[i].text
@@ -111,20 +111,24 @@ def get_subcategories(driver):
     return url_list
 
 
-def extract_products(driver, csv_writer, category, subcategory):
+def extract_products(
+    driver, csv_writer, category, subcategory, extracted_url, log_object
+):
     """Write all products in a subcategory with a csv_writer to file"""
 
     page_num = 1
     while True:
+        if driver.current_url in extracted_url:
+            break
         try:
             WebDriverWait(driver, 10).until(
-                EC.presence_of_all_elements_located(
-                    (By.XPATH, "//div[@class='AutoGrid-cell min-w-0']")
+                EC.presence_of_element_located(
+                    (By.XPATH, "//nav[@aria-label='Pagination']")
                 )
             )
         except:
             try:
-                # move to product page
+                # navigate to product page
                 shop_all_url = driver.find_element(
                     by=By.XPATH,
                     value="//a[contains(@class, 'ProminentLink') and not (contains(@href, '?'))]",
@@ -134,13 +138,17 @@ def extract_products(driver, csv_writer, category, subcategory):
             except:
                 # restart chrome when blocked
                 if "Access Denied" in driver.page_source:
-                    last_url = driver.current_url()
-                    driver.quit()
+                    last_url = driver.current_url
+                    driver.close()
+                    # driver.quit()
 
                     time.sleep(random.randint(25, 45))
+                    # driver = None
+                    # driver = uc.Chrome(version_main=100, options=OPTS)
                     driver.get_last(last_url)
                 else:
-                    driver.refresh()  # refresh page if products doesn't load
+                    # refresh page if products doesn't load
+                    driver.refresh()
                 continue
 
         page_response = Selector(text=driver.page_source.encode("utf8"))
@@ -159,6 +167,7 @@ def extract_products(driver, csv_writer, category, subcategory):
 
             price = product.xpath(".//data[@typeof='Price']/@value").get()
             product_id = extract_product_id(url)
+
             logging.info(
                 (
                     name,
@@ -179,6 +188,7 @@ def extract_products(driver, csv_writer, category, subcategory):
                     price,
                 )
             )
+        log_object.write(f"{driver.current_url}\n")  # add url to extracted urls
 
         # pagination
         try:
@@ -191,8 +201,8 @@ def extract_products(driver, csv_writer, category, subcategory):
             action.click()
             action.perform()
 
-            logging.info(f"Moving to page {page_num} in {subcategory}")
             page_num += 1
+            logging.info(f"Moving to page {page_num} in {subcategory}")
             continue
         except:
             break
@@ -203,13 +213,14 @@ def extract_products(driver, csv_writer, category, subcategory):
         extracted_subcategories = json.load(extracted)
 
     extracted_subcategories.append(subcategory)
-    with open("./utils/kroger/extracted_subcategories.json") as extracted:
+    with open("./utils/kroger/extracted_subcategories.json", "w") as extracted:
         json.dump(extracted_subcategories, extracted)
 
 
-def scrape_kroger(driver, subcategories_list, output_csv):
+def scrape_kroger(driver, subcategories_list, output_csv, log_file):
     """Extract all products from kroger and store in csv"""
 
+    # reading past extracted subcategories
     if os.path.exists("./utils/kroger/extracted_subcategories.json"):
         with open("./utils/kroger/extracted_subcategories.json") as extracted:
             extracted_subcategories = json.load(extracted)
@@ -218,7 +229,19 @@ def scrape_kroger(driver, subcategories_list, output_csv):
         with open("./utils/kroger/extracted_subcategories.json", "w") as extracted:
             json.dump(extracted_subcategories, extracted)
 
-    with open(output_csv, "a") as csv_file:
+    # reading extracted pages/url
+    if not os.path.exists(log_file):
+        with open(log_file, "x") as log_object:
+            extracted_url = []
+
+    else:
+
+        with open(log_file, "r") as log_object:
+            extracted_url = log_object.read().splitlines()
+            print(extracted_url)
+
+    # opening csv and log file for extracted products and extracted url/page to be written to
+    with open(output_csv, "a") as csv_file, open(log_file, "a") as log_object:
         csv_writer = writer(csv_file)
         headers = ("name", "subcategory", "category", "product_id", "url", "price")
         csv_writer.writerow(headers)
@@ -228,23 +251,33 @@ def scrape_kroger(driver, subcategories_list, output_csv):
             subcategory = subcategory_dict["subcategory"]
             subcategory_url = subcategory_dict["subcategory_url"]
 
-            if subcategory in extracted_subcategories:
+            if (
+                subcategory in extracted_subcategories
+                or subcategory_url in extracted_url
+            ):
                 continue
             driver.get(subcategory_url)
-            extract_products(driver, csv_writer, category, subcategory)
+            extract_products(
+                driver, csv_writer, category, subcategory, extracted_url, log_object
+            )
 
 
 if __name__ == "__main__":
     # random useragents to use with chrome
     ua = UserAgent()
-    opts = Options()
-    opts.add_argument(f"user-agent={ua.random}")
+    OPTS = Options()
+    OPTS.add_argument(f"user-agent={ua.random}")
 
-    driver = uc.Chrome(version_main=100, options=opts)
+    driver = uc.Chrome(version_main=100, options=OPTS)
     if not os.path.exists("./utils/kroger"):  # folder to store script files
         os.mkdir("./utils/kroger")
 
     subcategories = get_subcategories(driver)
 
     driver.maximize_window()
-    scrape_kroger(driver, subcategories, "kroger_products_trial.csv")
+    scrape_kroger(
+        driver,
+        subcategories,
+        "kroger_products_trial.csv",
+        "./utils/kroger/extracted_url.txt",
+    )
