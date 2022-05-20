@@ -13,6 +13,24 @@ import time, logging, random, json, os
 logging.basicConfig(level=logging.INFO)
 
 
+def page_num_in_url(url):
+    try:
+        num_start_index = url.index("=") + 1
+        return int(url[num_start_index:])
+    except:
+        return 1
+
+
+def get_last_extracted_url(extracted_urls, base_url):
+    try:
+        contains_base_url = [url for url in extracted_urls if url.startswith(base_url)]
+        last_extracted_url = max(contains_base_url, key=page_num_in_url)
+        return last_extracted_url
+    except:
+        print("kkef")
+        return base_url
+
+
 def extract_product_id(url):
     """Returns product id from product url"""
     try:
@@ -116,21 +134,12 @@ def extract_products(
     csv_writer,
     category,
     subcategory,
-    subcategory_url,
-    extracted_urls,
     log_object,
 ):
     """Write all products in a subcategory with a csv_writer to file"""
 
-    page_num = 1
+    page_num = page_num_in_url(driver.current_url)
     while True:
-        if driver.current_url in extracted_urls:
-            print("Extracted")
-            page_num += 1
-            next_url = f"{subcategory_url}?page={page_num}"
-            driver.get(next_url)
-            continue
-
         try:
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(
@@ -149,14 +158,10 @@ def extract_products(
             except:
                 # restart chrome when blocked
                 if "Access Denied" in driver.page_source:
-                    last_url = driver.current_url
-                    driver.close()
-                    # driver.quit()
-
-                    time.sleep(random.randint(25, 45))
-                    # driver = None
-                    # driver = uc.Chrome(version_main=100, options=OPTS)
-                    driver.get(last_url)
+                    last_extracted_url = driver.current_url
+                    logging.critical(
+                        "ACCESS DENIED!!! Run scraper again to resume from blocked page"
+                    )
                 else:
                     # refresh page if products doesn't load
                     driver.refresh()
@@ -179,16 +184,6 @@ def extract_products(
             price = product.xpath(".//data[@typeof='Price']/@value").get()
             product_id = extract_product_id(url)
 
-            logging.info(
-                (
-                    name,
-                    subcategory,
-                    category,
-                    product_id,
-                    url,
-                    price,
-                )
-            )
             csv_writer.writerow(
                 (
                     name,
@@ -219,7 +214,7 @@ def extract_products(
             break
     logging.info(f"EXTRACTION COMPLETE FOR {subcategory.upper()}")
 
-    # save extracted subcategory
+    # save extracted subcategories
     with open("./utils/kroger/extracted_subcategories.json") as extracted:
         extracted_subcategories = json.load(extracted)
 
@@ -229,9 +224,9 @@ def extract_products(
 
 
 def scrape_kroger(driver, subcategories_list, output_csv, log_file):
-    """Extract all products from kroger and store in csv"""
+    """Extracts all products from kroger and store in csv"""
 
-    # reading past extracted subcategories
+    # read past extracted subcategories
     if os.path.exists("./utils/kroger/extracted_subcategories.json"):
         with open("./utils/kroger/extracted_subcategories.json") as extracted:
             extracted_subcategories = json.load(extracted)
@@ -240,17 +235,15 @@ def scrape_kroger(driver, subcategories_list, output_csv, log_file):
         with open("./utils/kroger/extracted_subcategories.json", "w") as extracted:
             json.dump(extracted_subcategories, extracted)
 
-    # reading extracted pages/url
+    # read past extracted pages/url
     if not os.path.exists(log_file):
         with open(log_file, "w") as log_object:
             extracted_urls = []
-
     else:
-
         with open(log_file, "r") as log_object:
             extracted_urls = log_object.read().splitlines()
 
-    # opening csv and log file for extracted products and extracted url/page to be written to
+    # Open csv and log file for extracted products and extracted url/page to be written to
     with open(output_csv, "a") as csv_file, open(log_file, "a") as log_object:
         csv_writer = writer(csv_file)
         headers = ("name", "subcategory", "category", "product_id", "url", "price")
@@ -261,19 +254,18 @@ def scrape_kroger(driver, subcategories_list, output_csv, log_file):
             subcategory = subcategory_dict["subcategory"]
             subcategory_url = subcategory_dict["subcategory_url"]
 
-            if (
-                subcategory in extracted_subcategories
-                or subcategory_url in extracted_urls
-            ):
+            if subcategory in extracted_subcategories:
                 continue
-            driver.get(subcategory_url)
+
+            resume_url = get_last_extracted_url(extracted_urls, subcategory_url)
+            print(re)
+            driver.get(resume_url)
+
             extract_products(
                 driver,
                 csv_writer,
                 category,
                 subcategory,
-                subcategory_url,
-                extracted_urls,
                 log_object,
             )
 
