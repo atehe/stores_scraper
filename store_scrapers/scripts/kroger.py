@@ -22,13 +22,12 @@ def page_num_in_url(url):
 
 
 def get_last_extracted_url(extracted_urls, base_url):
-    """Returns the last extracted page url of a base url(subcategory)"""
+    """git sReturns the last extracted page url of a base url(subcategory)"""
     try:
         contains_base_url = [url for url in extracted_urls if url.startswith(base_url)]
         last_extracted_url = max(contains_base_url, key=page_num_in_url)
         return last_extracted_url
     except:
-        print("kkef")
         return base_url
 
 
@@ -142,6 +141,15 @@ def extract_products(
     page_num = page_num_in_url(driver.current_url)
     while True:
         try:
+            search_text = driver.find_element(
+                by=By.XPATH, value="//div[@class='SearchMessage']//span"
+            ).text
+            if "There were no results" in search_text:
+                break
+        except:
+            pass
+
+        try:
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//nav[@aria-label='Pagination']")
@@ -157,9 +165,7 @@ def extract_products(
                 click(shop_all_url, driver)
                 continue
             except:
-                # restart chrome when blocked
                 if "Access Denied" in driver.page_source:
-                    last_extracted_url = driver.current_url
                     logging.critical("ACCESS DENIED!!! Run scraper again to resume...")
                 else:
                     # refresh page if products doesn't load
