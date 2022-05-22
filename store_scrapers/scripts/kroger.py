@@ -8,7 +8,7 @@ from csv import writer
 from selenium.webdriver.chrome.options import Options
 from fake_useragent import UserAgent
 import undetected_chromedriver as uc
-import logging, json, os
+import logging, json, os, sys, time, random
 
 logging.basicConfig(level=logging.INFO)
 
@@ -63,7 +63,7 @@ def get_subcategories(driver):
     while navigating through the harmburger menu
     """
 
-    # read  and return past extracted subcategories
+    # read and return past extracted subcategories
     if os.path.exists("./utils/kroger/subcatecories_url.json"):
         with open("./utils/kroger/subcatecories_url.json") as url_list:
             return json.load(url_list)
@@ -165,8 +165,12 @@ def extract_products(
                 click(shop_all_url, driver)
                 continue
             except:
+                # quit scraper if access denied
                 if "Access Denied" in driver.page_source:
                     logging.critical("ACCESS DENIED!!! Run scraper again to resume...")
+                    driver.close()
+                    sys.exit()
+
                 else:
                     # refresh page if products doesn't load
                     driver.refresh()

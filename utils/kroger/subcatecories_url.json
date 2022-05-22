@@ -860,76 +860,6 @@
         "subcategory_url": "https://www.kroger.com/pl/reusable-bags-totes/28015"
     },
     {
-        "category": "Home",
-        "subcategory": "Kitchen and Dining",
-        "subcategory_url": "https://www.kroger.com/d/kitchen-dining"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Garden and Patio",
-        "subcategory_url": "https://www.kroger.com/d/patio-grilling"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Toys and Games",
-        "subcategory_url": "https://www.kroger.com/d/toys"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Batteries and Light Bulbs",
-        "subcategory_url": "https://www.kroger.com/pl/batteries-light-bulbs/15173"
-    },
-    {
-        "category": "Home",
-        "subcategory": "School and Office",
-        "subcategory_url": "https://www.kroger.com/pl/school-office/35?facets=true&pzn=relevance"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Electronics",
-        "subcategory_url": "https://www.kroger.com/d/electronics"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Home Furnishings and D\u00e9cor",
-        "subcategory_url": "https://www.kroger.com/pl/home-de-cor/32?taxonomyId=32&fulfillment=all"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Furniture",
-        "subcategory_url": "https://www.kroger.com/pl/furniture/31?taxonomyId=31&fulfillment=all"
-    },
-    {
-        "category": "Home",
-        "subcategory": "As Seen on TV",
-        "subcategory_url": "https://www.kroger.com/pl/as-seen-on-tv/15172"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Home Improvement",
-        "subcategory_url": "https://www.kroger.com/pl/hardware-home-improvement/33?taxonomyId=33&fulfillment=all"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Automotive",
-        "subcategory_url": "https://www.kroger.com/pl/automotive/15043"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Bedding",
-        "subcategory_url": "https://www.kroger.com/pl/bedding/38?taxonomyId=38&fulfillment=all"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Bath",
-        "subcategory_url": "https://www.kroger.com/pl/bath/37?taxonomyId=37&fulfillment=all"
-    },
-    {
-        "category": "Home",
-        "subcategory": "Craft and Hobby",
-        "subcategory_url": "https://www.kroger.com/pl/craft-hobby/34?taxonomyId=34&fulfillment=all"
-    },
-    {
         "category": "Electronics",
         "subcategory": "TVs & Home Theater",
         "subcategory_url": "https://www.kroger.com/pl/tvs-home-theater/29001"
@@ -1423,5 +1353,75 @@
         "category": "Floral",
         "subcategory": "Orchids",
         "subcategory_url": "https://www.kroger.com/pl/orchids/09132"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Kitchen and Dining",
+        "subcategory_url": "https://www.kroger.com/d/kitchen-dining"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Garden and Patio",
+        "subcategory_url": "https://www.kroger.com/d/patio-grilling"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Toys and Games",
+        "subcategory_url": "https://www.kroger.com/d/toys"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Batteries and Light Bulbs",
+        "subcategory_url": "https://www.kroger.com/pl/batteries-light-bulbs/15173"
+    },
+    {
+        "category": "Home",
+        "subcategory": "School and Office",
+        "subcategory_url": "https://www.kroger.com/pl/school-office/35?facets=true&pzn=relevance"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Electronics",
+        "subcategory_url": "https://www.kroger.com/d/electronics"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Home Furnishings and D\u00e9cor",
+        "subcategory_url": "https://www.kroger.com/pl/home-de-cor/32?taxonomyId=32&fulfillment=all"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Furniture",
+        "subcategory_url": "https://www.kroger.com/pl/furniture/31?taxonomyId=31&fulfillment=all"
+    },
+    {
+        "category": "Home",
+        "subcategory": "As Seen on TV",
+        "subcategory_url": "https://www.kroger.com/pl/as-seen-on-tv/15172"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Home Improvement",
+        "subcategory_url": "https://www.kroger.com/pl/hardware-home-improvement/33?taxonomyId=33&fulfillment=all"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Automotive",
+        "subcategory_url": "https://www.kroger.com/pl/automotive/15043"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Bedding",
+        "subcategory_url": "https://www.kroger.com/pl/bedding/38?taxonomyId=38&fulfillment=all"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Bath",
+        "subcategory_url": "https://www.kroger.com/pl/bath/37?taxonomyId=37&fulfillment=all"
+    },
+    {
+        "category": "Home",
+        "subcategory": "Craft and Hobby",
+        "subcategory_url": "https://www.kroger.com/pl/craft-hobby/34?taxonomyId=34&fulfillment=all"
     }
 ]
