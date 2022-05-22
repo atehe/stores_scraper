@@ -13,6 +13,11 @@ import logging, json, os, sys, time, random
 logging.basicConfig(level=logging.INFO)
 
 
+SUBCATEGORIES_LIST = "./utils/kroger/subcatecories_url.json"  # list of dictionaries containing category, subcategory and subcategory URL
+EXTRACTED_SUBCATEGORIES = "./utils/kroger/extracted_subcategories.json"  # contains list of subcategories extracted, used to resume  scraping when blocked
+EXTRACTED_URLS = "./utils/kroger/extracted_url.txt"  # contains urls of pages extracted in each subcategory, used to resume from exact page number when blocked
+
+
 def page_num_in_url(url):
     try:
         num_start_index = url.index("=") + 1
@@ -64,8 +69,8 @@ def get_subcategories(driver):
     """
 
     # read and return past extracted subcategories
-    if os.path.exists("./utils/kroger/subcatecories_url.json"):
-        with open("./utils/kroger/subcatecories_url.json") as url_list:
+    if os.path.exists(SUBCATEGORIES_LIST):
+        with open(SUBCATEGORIES_LIST) as url_list:
             return json.load(url_list)
 
     driver.get("https://www.kroger.com/")
@@ -124,7 +129,7 @@ def get_subcategories(driver):
         )
 
     # save url_list for next time
-    with open("./utils/kroger/subcatecories_url.json", "w") as json_file:
+    with open(SUBCATEGORIES_LIST, "w") as json_file:
         json.dump(url_list, json_file)
     return url_list
 
@@ -224,11 +229,11 @@ def extract_products(
     logging.info(f"EXTRACTION COMPLETE FOR {subcategory.upper()}")
 
     # save extracted subcategories
-    with open("./utils/kroger/extracted_subcategories.json") as extracted:
+    with open(EXTRACTED_SUBCATEGORIES) as extracted:
         extracted_subcategories = json.load(extracted)
 
     extracted_subcategories.append(subcategory)
-    with open("./utils/kroger/extracted_subcategories.json", "w") as extracted:
+    with open(EXTRACTED_SUBCATEGORIES, "w") as extracted:
         json.dump(extracted_subcategories, extracted)
 
 
@@ -236,26 +241,24 @@ def scrape_kroger(driver, subcategories_list, output_csv):
     """Extracts all products from kroger and store in csv"""
 
     # read past extracted subcategories
-    if os.path.exists("./utils/kroger/extracted_subcategories.json"):
-        with open("./utils/kroger/extracted_subcategories.json") as extracted:
+    if os.path.exists(EXTRACTED_SUBCATEGORIES):
+        with open(EXTRACTED_SUBCATEGORIES) as extracted:
             extracted_subcategories = json.load(extracted)
     else:
         extracted_subcategories = []
-        with open("./utils/kroger/extracted_subcategories.json", "w") as extracted:
+        with open(EXTRACTED_SUBCATEGORIES, "w") as extracted:
             json.dump(extracted_subcategories, extracted)
 
     # read past extracted pages/url
-    if not os.path.exists("./utils/kroger/extracted_url.txt"):
-        with open("./utils/kroger/extracted_url.txt", "w") as log_object:
+    if not os.path.exists(EXTRACTED_URLS):
+        with open(EXTRACTED_URLS, "w") as log_object:
             extracted_urls = []
     else:
-        with open("./utils/kroger/extracted_url.txt", "r") as log_object:
+        with open(EXTRACTED_URLS, "r") as log_object:
             extracted_urls = log_object.read().splitlines()
 
     # Open csv and log file for extracted products and extracted url/page to be written to
-    with open(output_csv, "a") as csv_file, open(
-        "./utils/kroger/extracted_url.txt", "a"
-    ) as log_object:
+    with open(output_csv, "a") as csv_file, open(EXTRACTED_URLS, "a") as log_object:
         csv_writer = writer(csv_file)
         headers = ("name", "subcategory", "category", "product_id", "url", "price")
         csv_writer.writerow(headers)
