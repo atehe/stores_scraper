@@ -30,8 +30,26 @@ def load_all_products(driver):
     return driver.page_source
 
 
-# def handle_popup(driver):
-#     popup = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH)))
+def set_location(driver, postal_code):
+    try:
+        print("hello")
+        location_popup = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//input[@id='pie-store-finder-modal-search-field']")
+            )
+        )
+        print("hello2")
+        location_popup.send_keys(postal_code)
+        search_result = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//li[@class='wfm-search-bar--list_item']")
+            )
+        )
+        print("hello")
+        click(search_result, driver)
+
+    except:
+        print("No location selected")
 
 
 def extract_products(category, subcategory, csv_writer, page):
@@ -54,7 +72,7 @@ def extract_products(category, subcategory, csv_writer, page):
         if not product_url.startswith("http"):
             product_url = f"https://www.wholefoodsmarket.com{product_url}"
         # regular_price = product.xpath(".//span[@class='regular_price']/b/text()").get()
-        regular_price = "".join(
+        regular_price = " ".join(
             product.xpath(".//li[@data-testid='regular-price']//text()").getall()
         )
 
@@ -124,36 +142,12 @@ def scrape_wholefoodsmarket(driver, output_csv):
 
 
 if __name__ == "__main__":
-    # options = Options()
-    # options.add_experimental_option("prefs", {"geolocation": True})
-    options = Options()
-    # options.add_argument(
-    #     r"user-data-dir=/home/atehe/.config/google-chrome/Default"
-    # )  # e.g. C:\Users\You\AppData\Local\Google\Chrome\User Data
-    # options.add_argument(r"profile-directory=Profile 1")
-    options.add_argument(
-        r"user-data-dir=/home/atehe/.config/google-chrome/Default/Profile 1"
-    )
 
-    driver = uc.Chrome(version_main=100, options=options)
-
-    # latitude = 42.1408845
-    # longitude = -87.5033907
-    # accuracy = 100
-
-    # driver.maximize_window()
-    # driver.execute_cdp_cmd(
-    #     "Emulation.setGeolocationOverride",
-    #     {
-    #         "latitude": latitude,
-    #         "longitude": longitude,
-    #         "accuracy": accuracy,
-    #     },
-    # )
+    driver = uc.Chrome(version_main=100)
 
     driver.get(
         "https://www.wholefoodsmarket.com/products/dairy-eggs/cheese?diets=vegan"
     )
+    set_location(driver, 600)
     page = load_all_products(driver)
     extract_products("category", "subcategory", "csv_writer", page)
-    time.sleep(1000)
