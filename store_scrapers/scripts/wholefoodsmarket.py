@@ -72,7 +72,9 @@ def extract_products(category, subcategory, csv_writer, page):
             product.xpath(".//li[@data-testid='regular-price']//text()").getall()
         ).strip("Regular")
 
-        csv_writer.writerow((name, brand, category, subcategory, regular_price))
+        csv_writer.writerow(
+            (name, brand, category, subcategory, regular_price, ASIN, product_url)
+        )
 
     logging.info(f"Extraction complete for {category}: {subcategory}...")
 
@@ -129,7 +131,15 @@ def scrape_wholefoodsmarket(driver, output_csv):
 
     with open(output_csv, "a") as csv_file:
         csv_writer = writer(csv_file)
-        headers = ("name", "brand", "category", "subcategory", "price")
+        headers = (
+            "name",
+            "brand",
+            "category",
+            "subcategory",
+            "regular_price",
+            "ASIN",
+            "product_url",
+        )
         csv_writer.writerow(headers)
 
         subcategories_dict = get_categories_dict(driver)

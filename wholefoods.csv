@@ -1,14 +1,5 @@
 name,brand,category,subcategory,price
 name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
-name,brand,category,subcategory,price
 Organic Honeycrisp Apple,PRODUCE,Produce,Fresh Fruit,$3.99/lb
 Organic Large Hass Avocados,PRODUCE,Produce,Fresh Fruit,$2.99
 Large Hass Avocados,PRODUCE,Produce,Fresh Fruit,$2.49
@@ -155,12 +146,10 @@ Organic Romaine Lettuce,PRODUCE,Produce,Fresh Vegetables,$2.49
 Organic Red Bell Pepper,PRODUCE,Produce,Fresh Vegetables,$3.99/lb
 Organic Wild Wonder Tomatoes,SUNSET PRODUCE,Produce,Fresh Vegetables,$4.99
 Organic Red Radish Bunch,PRODUCE,Produce,Fresh Vegetables,$1.49
-Organic Red Radish Bunch,PRODUCE,Produce,Fresh Vegetables,$1.49
 Organic Loose Carrots,PRODUCE,Produce,Fresh Vegetables,$1.49/lb
 Heirloom Tomato,PRODUCE,Produce,Fresh Vegetables,$3.99/lb
 True Hearts Romaine,organicgirl,Produce,Fresh Vegetables,$4.39
 Organic Butternut Squash,PRODUCE,Produce,Fresh Vegetables,$1.69/lb
-True Hearts Romaine,organicgirl,Produce,Fresh Vegetables,$4.39
 Organic Dino Kale,PRODUCE,Produce,Fresh Vegetables,$2.49
 Organic Red Cabbage,PRODUCE,Produce,Fresh Vegetables,$1.49/lb
 Mini Seedless Cucumber,Sunset,Produce,Fresh Vegetables,$3.99
@@ -181,7 +170,6 @@ Organic Broccoli Rabe,PRODUCE,Produce,Fresh Vegetables,$3.29
 Cauliflower,PRODUCE,Produce,Fresh Vegetables,$3.99
 Organic Baby Bok Choy,PRODUCE,Produce,Fresh Vegetables,$2.49/lb
 Organic Yellow Creamer Potatoes,PRODUCE,Produce,Fresh Vegetables,$4.99
-Sunrise Medley Potatoes,PRODUCE,Produce,Fresh Vegetables,$3.99
 Organic Chopped Kale,365 Everyday Value®,Produce,Fresh Vegetables,$3.99
 Organic Spaghetti Squash,PRODUCE,Produce,Fresh Vegetables,$1.69/lb
 Organic Sweet Baby Lettuces,Whole Foods Market,Produce,Fresh Vegetables,$3.49
@@ -220,7 +208,6 @@ Organic Bok Choy,PRODUCE,Produce,Fresh Vegetables,$1.99/lb
 Green Jalapeno Pepper,PRODUCE,Produce,Fresh Vegetables,$1.29/lb
 Organic Mini Cucumbers,PRODUCE,Produce,Fresh Vegetables,$4.99
 Organic Vegetable Tray with Ranch Dip,Earthbound Farm,Produce,Fresh Vegetables,$6.99
-Organic Mini Cucumbers,PRODUCE,Produce,Fresh Vegetables,$4.99
 Organic Red Chard,PRODUCE,Produce,Fresh Vegetables,$2.99
 Organic Yellow Bell Pepper,PRODUCE,Produce,Fresh Vegetables,$3.99/lb
 Shallot,PRODUCE,Produce,Fresh Vegetables,$3.99/lb
@@ -946,7 +933,6 @@ Unsweetened Vanilla Almondmilk,Almond Breeze,Dairy & Eggs,Dairy Alternatives,$3.
 "Soy Free Buttery Spread, 15 oz",Earth Balance,Dairy & Eggs,Dairy Alternatives,$4.79
 "Organic Whipped Buttery Spread, 13 oz",Earth Balance,Dairy & Eggs,Dairy Alternatives,$6.39
 "Original Organic Almondmilk, 64 fluid ounce",365 Everyday Value®,Dairy & Eggs,Dairy Alternatives,$3.99
-"Organic Whipped Buttery Spread, 13 oz",Earth Balance,Dairy & Eggs,Dairy Alternatives,$6.39
 Just Like Mozzarella Shreds,Violife,Dairy & Eggs,Dairy Alternatives,$6.29
 "Living Coconut Yogurt, 8 oz",GT's Cocoyo,Dairy & Eggs,Dairy Alternatives,$5.99
 Organic Vanilla 8oz,GT's Cocoyo,Dairy & Eggs,Dairy Alternatives,$5.99
@@ -1117,7 +1103,6 @@ Chocolate Almond Breeze Almondmilk (32 Fl Oz),Blue Diamond,Dairy & Eggs,Dairy Al
 "Chocolate Oatmilk, 32 fl oz",365 by Whole Foods Market,Dairy & Eggs,Dairy Alternatives,$2.69
 "Vanilla Enriched Rice Rice Drink (1/2 Gl), 64 fl oz",Dream,Dairy & Eggs,Dairy Alternatives,$6.99
 "Cashew Beverage Original, 32 fl oz",Pacific Foods,Dairy & Eggs,Dairy Alternatives,$4.49
-"Cashew Beverage Original, 32 fl oz",Pacific Foods,Dairy & Eggs,Dairy Alternatives,$4.49
 "Cinnamon Roll Oat Creamer, 25.4 fl oz",Califia Farms,Dairy & Eggs,Dairy Alternatives,$4.99
 "Organic Unsweetened Almond Milk, Chocolate, 48 fl oz",365 by Whole Foods Market,Dairy & Eggs,Dairy Alternatives,$6.99
 "Straightshot Yumberry Oat Drink, 2.7 fl oz",GoodBelly,Dairy & Eggs,Dairy Alternatives,$3.29
@@ -1285,7 +1270,6 @@ Organic Lowfat 1% Milk,Organic Valley,Dairy & Eggs,Milk & Cream,$8.99
 Organic Whole Milk,Neutral,Dairy & Eggs,Milk & Cream,$4.99
 "Instant Lowfat Dry Milk, 3.44 oz",Milkman,Dairy & Eggs,Milk & Cream,$2.49
 "Organic Kalona Half & Half, 16 fl oz",Kalona SuperNatural,Dairy & Eggs,Milk & Cream,$2.99
-Organic Whole Milk,Neutral,Dairy & Eggs,Milk & Cream,$4.99
 "Wondermilk Milk Alternative, Whole Fat, Vegan, 59oz., Non-GMO Project Verified",So Delicious Dairy Free,Dairy & Eggs,Milk & Cream,$4.99
 "Sweetened Sweet Crème, 11.2 fl oz",nutpods,Dairy & Eggs,Milk & Cream,$3.99
 "Organic Shelf-Stable 1% Low Fat milk Boxes, Chocolate, 8 fl oz",Horizon Organic,Dairy & Eggs,Milk & Cream,$1.59
@@ -1310,7 +1294,6 @@ Ground Beef 90% Lean/10% Fat,Niman Ranch,Meat,Beef,$7.99
 Beef Round Stew,MEAT,Meat,Beef,$7.49/lb
 Boneless Beef Chuck Roast,MEAT,Meat,Beef,$9.99/lb
 Bone In Flanken Style Beef Short Ribs,MEAT,Meat,Beef,$10.99/lb
-Ground Beef 90% Lean/ 10% Fat,MEAT,Meat,Beef,$7.99/lb
 Meatballs & Sauce,RAOS,Meat,Beef,$13.49
 Beef T-Bone Steak,MEAT,Meat,Beef,$15.99/lb
 Beef Top Round London Broil,,Meat,Beef,$9.99/lb
@@ -1318,7 +1301,6 @@ Beef Top Round London Broil,,Meat,Beef,$9.99/lb
 Uncured Pork & Beef Pepperoni,Applegate,Meat,Beef,$6.49
 Corned Beef Ch,Wellshire Farms,Meat,Beef,$13.99/lb
 Pepperoni Ch,Applegate Farms,Meat,Beef,$16.99/lb
-Beef Round Stew,MEAT,Meat,Beef,$7.49/lb
 85% Lean Ground Beef,,Meat,Beef,$4.99
 Honest Dogs With Pasture-raised Beef,Fork in the Road Foods,Meat,Beef,$7.99
 Organic Plain Rotisserie Chicken,Whole Foods Market,Meat,Chicken,$10.99
@@ -1338,7 +1320,6 @@ Organic Chicken Thighs,Pine Manor Farms,Meat,Chicken,$5.99/lb
 Boneless Skinless Chicken Thighs,MEAT,Meat,Chicken,$6.49/lb
 Boneless Skinless Chicken Breast,Pine Manor Farms,Meat,Chicken,$8.99/lb
 Organic Oven Roasted Chicken Breast,365 Everyday Value®,Meat,Chicken,$6.99
-Classic Rotisserie Chicken,Whole Foods Market,Meat,Chicken,$7.99
 Whole Chicken,Pine Manor Farms,Meat,Chicken,$3.29/lb
 Oven Roasted Chicken Breast,Applegate,Meat,Chicken,$8.49
 Organic Bone In Split Chicken Breast,Pine Manor Farms,Meat,Chicken,$7.99/lb
@@ -1353,7 +1334,6 @@ Bone In Chicken Thighs,Pine Manor Farms,Meat,Chicken,$3.99/lb
 Organic Ground Chicken Breast,Pine Manor Farms,Meat,Chicken,$10.99
 Chicken Drumsticks,Pine Manor Farms,Meat,Chicken,$3.49/lb
 Boneless Skinless Chicken Thighs,365 by Whole Foods Market,Meat,Chicken,$4.99/lb
-Boneless Skinless Chicken Thighs,MEAT,Meat,Chicken,$6.49/lb
 Bone In Split Chicken Breast,MEAT,Meat,Chicken,$5.99/lb
 Boneless Skinless Chicken Breast Cutlets,MEAT,Meat,Chicken,$8.99/lb
 Mousse Pork Free Chicken Liver And Pepper Organic,Trois Petits Cochons Three Little Pigs,Meat,Chicken,$6.99
@@ -1378,7 +1358,6 @@ Genoa Mild Salame,Gusto™,Meat,Pork,$7.99
 Prosciutto Panino,Naturalissima,Meat,Pork,$7.99
 Colameco's Primo Spanish Deli Selection Salame,Wellshire Farms,Meat,Pork,$10.99
 Organic Uncured Black Forest Ham,365 Everyday Value®,Meat,Pork,$6.99
-Virginia Baked Ham,Wellshire Farms,Meat,Pork,$10.99/lb
 Packaged Sliced Lunchmeat Uncured Ham Black Forecast - Value Pack,365 by Whole Foods Market,Meat,Pork,$9.99
 Packaged Sliced Lunchmeat Uncured Ham Black Forecast - Ultra Thin,365 by Whole Foods Market,Meat,Pork,$5.29
 Sopressata Black Peppercorn Salame,Gusto™,Meat,Pork,$7.99
@@ -1626,7 +1605,6 @@ Quiches Tomato Mozzarella Basil,Whole Foods Market,Prepared Foods,Prepared Meals
 "Creole Red Beans, 10 oz",A Dozen Cousins,Prepared Foods,Prepared Meals,$3.79
 "Seasoned Squid Salad, 3 oz",Kikka,Prepared Foods,Prepared Meals,$5.99
 "Asian Style Chicken Entrée, 16 oz",Snapdragon,Prepared Foods,Prepared Meals,$9.99
-"Asian Style Chicken Entrée, 16 oz",Snapdragon,Prepared Foods,Prepared Meals,$9.99
 "Spicy Tuna Don Bowl, 9 oz",Kikka,Prepared Foods,Prepared Meals,$12.99
 "Hummus, 16 oz",Whole Foods Market,Prepared Foods,Prepared Meals,$8.99/lb
 Cheese Lasagna,Whole Foods Market,Prepared Foods,Prepared Meals,$8.99/lb
@@ -1642,7 +1620,6 @@ Sonoma Chicken Salad,Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$
 "Classic Chicken Salad, 0.47 lb",Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$13.99/lb
 "Classic Tuna Salad, 0.42 lb",Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$13.99/lb
 "Cranberry Apple Tuna Salad, 1.07 lb",Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$13.99/lb
-Sonoma Chicken Salad,Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$13.99/lb
 Classic Tuna Salad,Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$13.99/lb
 "Classic Egg Salad, 1.01 lb",Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$9.99/lb
 Smoked Mozzarella Pasta Salad,Whole Foods Market,Prepared Foods,Prepared Soups & Salads,$7.99/lb
@@ -1732,7 +1709,6 @@ Organic Raw Honey,Y.S. Eco Bee Farms,Pantry Essentials,Baking,$17.49
 "Organic Flour, Whole Wheat, 5 lb",365 by Whole Foods Market,Pantry Essentials,Baking,$4.79
 "Organic Chocolate Chunk Cookies, 12 oz",Immaculate Baking,Pantry Essentials,Baking,$7.29
 "Wildflower Raw Honey, 16 oz",Local Hive,Pantry Essentials,Baking,$8.99
-"Chocolate Baking Chips, 11.5 oz",Guittard Chocolate,Pantry Essentials,Baking,$4.99
 "Organic Semi Sweet Chocolate Chips, 10 oz",365 by Whole Foods Market,Pantry Essentials,Baking,$4.99
 "Organic Raw Agave Nectar, 23.5 oz",365 by Whole Foods Market,Pantry Essentials,Baking,$6.49
 "Raw Honey, 22 oz",Y.S. Eco Bee Farms,Pantry Essentials,Baking,$10.29
@@ -2094,7 +2070,6 @@ Boneless & Skinless Wild Alaska Pink Salmon,Wild Planet,Pantry Essentials,Canned
 "Organic Castelvetrano Pitted Olives, 4.9 oz",Divina,Pantry Essentials,Canned Goods,$7.69
 "Organic Shelf-Stable Beans, Baked, 15 oz",365 by Whole Foods Market,Pantry Essentials,Canned Goods,$1.29
 "Canned Beans, Dark Red Kidney (No Salt Added), 15.5 oz",365 by Whole Foods Market,Pantry Essentials,Canned Goods,99¢
-"Shelf-Stable Artichoke Hearts, 14.1 oz",365 by Whole Foods Market,Pantry Essentials,Canned Goods,$3.29
 "Organic Young Jackfruit, 7.9 oz",Native Forest,Pantry Essentials,Canned Goods,$3.99
 "Organic Tomato Paste, 6 oz",Muir Glen,Pantry Essentials,Canned Goods,$1.89
 "Organic Shelf-Stable Beans, Cannellini - No Salt Added, 13.4 oz",365 by Whole Foods Market,Pantry Essentials,Canned Goods,$1.29
@@ -2398,7 +2373,6 @@ Sardines,Conservas Ortiz,Pantry Essentials,Canned Goods,$7.99
 "Chunky Hot Giardiniera, 16 fl oz",THAT PICKLE GUY,Pantry Essentials,Canned Goods,$7.39
 "Tri Color Tomatoes, 10 oz",365 by Whole Foods Market,Pantry Essentials,Canned Goods,$1.69
 "Crushed Tomatoes With Basil, 28 oz",Summer Is Inside,Pantry Essentials,Canned Goods,$2.69
-"Select Wild Caught Snow Crab, 5.3 oz",COLE,Pantry Essentials,Canned Goods,$10.99
 "Organic Whole Tomatoes, 14.28 oz",Organico Bello,Pantry Essentials,Canned Goods,$3.19
 Felix Wild Natural Lingonberries (10 Oz),Felix Jam,Pantry Essentials,Canned Goods,$6.29
 "Cream Style Gold Corn, 14.75 oz",Butter Kernel,Pantry Essentials,Canned Goods,$2.19
@@ -2415,7 +2389,6 @@ Felix Wild Natural Lingonberries (10 Oz),Felix Jam,Pantry Essentials,Canned Good
 "Detox Greens Soup, 16 oz",Skinny Souping®,Pantry Essentials,Canned Goods,$6.99
 "Roasted Red Peppers & Mushrooms, 10 oz",Rao's Homemade,Pantry Essentials,Canned Goods,$7.99
 "Organic Spanish Style Sofrito Broth, 16.9 fl oz",Plantstrong,Pantry Essentials,Canned Goods,$3.99
-"Spicy Pickle Spears, 32 fl oz",McClure's,Pantry Essentials,Canned Goods,$9.79
 "Refried Black Beans, 16 oz",Siete,Pantry Essentials,Canned Goods,$2.49
 "Wild Natural Lingonberries, 14.5 oz",Felix Jam,Pantry Essentials,Canned Goods,$7.29
 Sardines In Olive Oil,Matiz,Pantry Essentials,Canned Goods,$3.99
@@ -2470,14 +2443,9 @@ Pole Caught Albacore Tuna (No Salt),American Tuna,Pantry Essentials,Canned Goods
 Crown Prince Skinless Boneless Sardines In Olive Oil,Crown Prince Natural,Pantry Essentials,Canned Goods,$4.39
 "Organic Cream Of Mushroom Soup, 14.5 oz",Health Valley,Pantry Essentials,Canned Goods,$3.99
 "Organic Great Northern Beans, 15 oz",Eden Foods,Pantry Essentials,Canned Goods,$2.49
-Boiled Baby Clams,Crown Prince Natural,Pantry Essentials,Canned Goods,$4.49
-"Organic Garbanzo Beans - No Salt Added, 29 oz",Eden Foods,Pantry Essentials,Canned Goods,$3.49
 Chopped Clams,Bar Harbor Foods,Pantry Essentials,Canned Goods,$5.49
 "Organic Vegetarian Baked Beans, 15 oz",Amy's Kitchen,Pantry Essentials,Canned Goods,$2.99
-"Organic Butter Beans, 15 oz",Eden Foods,Pantry Essentials,Canned Goods,$2.49
-"Organic Black Beans, 15 oz",Eden Foods,Pantry Essentials,Canned Goods,$2.49
 "Sashimi Albacore Tuna, 5 oz",HENRY & LISAS,Pantry Essentials,Canned Goods,$8.79
-"Sundried Tomatoes In Extra-virgin Olive Oil, 8.5 ounce",365 Everyday Value®,Pantry Essentials,Canned Goods,$5.69
 "Creamy Tomato Bone Broth Soup, 1.2 oz",Power Provisions,Pantry Essentials,Canned Goods,$3.29
 "Blue Cheese Stuffed Olives, 6.7 oz",Tassos,Pantry Essentials,Canned Goods,$7.69
 "Organic Chopped Tomatoes, 14.28 oz",Organico Bello,Pantry Essentials,Canned Goods,$3.19
@@ -2615,7 +2583,6 @@ Organic Oats & Honey Granola,Cascadian Farm,Pantry Essentials,Cereal,$4.99
 "Dark Chocolate Macaroon Granola, 11.5 oz",Nature's Path Organic,Pantry Essentials,Cereal,$4.99
 "Organic Cereal, Gluten Free Berry Crisp Pillows, 10.6 oz",365 by Whole Foods Market,Pantry Essentials,Cereal,$4.79
 "Granola Cacao Cashew Butter, 11 oz",Bear Naked,Pantry Essentials,Cereal,$4.99
-"Grain Free Cereal, 8 oz",Seven Sundays,Pantry Essentials,Cereal,$6.79
 "Organic Fruity Super Rings, 10 oz",365 by Whole Foods Market,Pantry Essentials,Cereal,$4.79
 "Golden Turmeric Superfood Granola, 9.5 oz",Nature's Path Organic,Pantry Essentials,Cereal,$7.69
 "Almond Cherry Granola, 11 oz",Jessica's Natural Foods,Pantry Essentials,Cereal,$7.79
@@ -3568,7 +3535,6 @@ Fettucine Pasta,De Cecco,Pantry Essentials,Pasta & Noodles,$2.99
 "Porcini Mushroom Tortelloni, 8.8 oz",Bertagni,Pantry Essentials,Pasta & Noodles,$6.99
 "Chickpea Mac & Cheese Cups, 2.1 oz",Banza,Pantry Essentials,Pasta & Noodles,$5.99
 "Millet & Brown Rice Ramen, 2.8 oz",Lotus Foods,Pantry Essentials,Pasta & Noodles,$2.19
-"Organic Gluten Free Brown Rice Spaghetti, 12 oz",Jovial,Pantry Essentials,Pasta & Noodles,$4.29
 "Creamy Roasted Garlic & Herb Mac N' Cheese, 10.3 oz",Howl,Pantry Essentials,Pasta & Noodles,$5.99
 "Organic Vegan Elbow Pasta & Creamy Sauce, 6 oz",Annie's Homegrown,Pantry Essentials,Pasta & Noodles,$4.19
 "Spinach Ricotta Ravioli, 8 ounce",365 Everyday Value®,Pantry Essentials,Pasta & Noodles,$4.69
@@ -3576,14 +3542,11 @@ Fettucine Pasta,De Cecco,Pantry Essentials,Pasta & Noodles,$2.99
 "Organic Basil Pesto Mezzelune, 8 oz",Bertagni,Pantry Essentials,Pasta & Noodles,$7.99
 "Angel Hair Ready Noodle, 7 oz",Miracle Noodle,Pantry Essentials,Pasta & Noodles,$3.69
 "Organic Butternut Squash Ravioli, 8 oz",365 Everyday Value®,Pantry Essentials,Pasta & Noodles,$4.69
-"Organic Basil Pesto Mezzelune, 8 oz",Bertagni,Pantry Essentials,Pasta & Noodles,$7.99
 "™ Organic Cavatelli, 16 oz",Whole Foods Market,Pantry Essentials,Pasta & Noodles,$2.79
-"Angel Hair Ready Noodle, 7 oz",Miracle Noodle,Pantry Essentials,Pasta & Noodles,$3.69
 Buffalo Mozzarella Ravioli,Bertagni,Pantry Essentials,Pasta & Noodles,$6.99
 Chicken And Mozzarella Ravioli,Artisola,Pantry Essentials,Pasta & Noodles,$7.99
 "Butternut Squash Ravioli, 8.8 oz",Bertagni,Pantry Essentials,Pasta & Noodles,$6.99
 "Less Sodium Macaroni & Cheese, 6 oz",Annie's Homegrown,Pantry Essentials,Pasta & Noodles,$2.49
-"Fire Roasted Heirloom Tomato, Mozzarella And Basil Ravioli",Bertagni,Pantry Essentials,Pasta & Noodles,$6.99
 "Organic Conchiglioni Pasta, 16 oz",Seggiano,Pantry Essentials,Pasta & Noodles,$6.69
 "Organic Jasmine Thai White Rice, 32 oz",365 by Whole Foods Market,Pantry Essentials,Rice & Grains,$5.29
 "Organic California White Jasmine Rice, 32 oz",Lundberg Family Farms,Pantry Essentials,Rice & Grains,$7.49
@@ -3691,10 +3654,8 @@ Organic Pinto Beans,FARMERS DIRECT COOP,Pantry Essentials,Rice & Grains,$1.99/lb
 "Kimchi Fried Rice Mix, 24 oz",NEILLY'S,Pantry Essentials,Rice & Grains,$7.99
 "Rice  Arborio Italian, 2.2 lb",ISOLA,Pantry Essentials,Rice & Grains,$5.79
 "Mediterranean Vegetable Rice, 7 oz",RightRice,Pantry Essentials,Rice & Grains,$3.99
-"Organic Brown Rice, 8.8 oz",Tasty Bite,Pantry Essentials,Rice & Grains,$2.79
 "Grilled Cheese Cheesy Rice, 6.6 oz",Annie's Homegrown,Pantry Essentials,Rice & Grains,$4.19
 "Dried Shiitake Mushrooms, 1 each",FOREST,Pantry Essentials,Rice & Grains,$5.49
-"Organic Turmeric Rice, 8.8 oz",TASTYBITE,Pantry Essentials,Rice & Grains,$2.79
 "Black Beans Organic, 15 ounce",Omena Organics,Pantry Essentials,Rice & Grains,$2.39
 "Black Eyed Peas Organic, 15 oz",Omena Organics,Pantry Essentials,Rice & Grains,$1.99
 "Dark Red Kidney Beans Organic, 15 ounce",Omena Organics,Pantry Essentials,Rice & Grains,$2.39
@@ -4048,7 +4009,6 @@ Organic Turkey Bone Broth,Bonafide Provisions,Pantry Essentials,Soups & Broths,$
 "Coconut Lime Curry Chicken Bone Broth, 16.9 oz",Kettle & Fire,Pantry Essentials,Soups & Broths,$7.49
 "Creamy Tomato Bone Broth Soup, 1.2 oz",Power Provisions,Pantry Essentials,Soups & Broths,$3.29
 "Organic Chicken Noodle Soup (No Salt Added), 14.5 oz",Health Valley,Pantry Essentials,Soups & Broths,$3.99
-"Organic Lentil Vegetable Soup, 14.5 oz",Amy's Kitchen,Pantry Essentials,Soups & Broths,$4.29
 "Organic  Beef Base, 8 oz",Better Than Bouillon,Pantry Essentials,Soups & Broths,$8.39
 "Organic Chicken Stock, 32 fl oz",Pacific Foods,Pantry Essentials,Soups & Broths,$6.29
 "Organic Creamy Butternut Squash Soup Low Sodium, 32 fl oz",Imagine Foods,Pantry Essentials,Soups & Broths,$6.29
@@ -5220,7 +5180,6 @@ CordycepsOrganic Mushro Powder,Om,Supplements,Functional Foods,$26.99
 "Lecithin Granules, 15.9 ounce",Whole Foods Market,Supplements,Functional Foods,$13.99
 "Fermented Chlorella, 100 count",Whole Foods Market,Supplements,Functional Foods,$9.99
 "Organic Camu Camu Powder, 3.5 oz",Sunfood™,Supplements,Functional Foods,$22.99
-"Propolis Spray, 1.06 fl oz",Beekeeper's Naturals,Supplements,Functional Foods,$14.99
 "Propolis 1000 MG, 90 veggie capsules",YS BEE FARMS,Supplements,Functional Foods,$16.99
 "Organic Goji Powder, 4 Oz",Navitas Organics,Supplements,Functional Foods,$14.99
 "Sunflower Lecithin, 90 count",Whole Foods Market,Supplements,Functional Foods,$9.99
@@ -5845,17 +5804,10 @@ Organic Turkey Bone Broth,Bonafide Provisions,Frozen Foods,Frozen Entrées & App
 "Mac And Cheese Bite Truffle, 8 oz",Feel Good Foods,Frozen Foods,Frozen Entrées & Appetizers,$5.69
 "Macaroni & Cheese, 9 oz",Amy's Kitchen,Frozen Foods,Frozen Entrées & Appetizers,$3.49
 "Frozen Organic Fruit, Blueberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$10.49
-"Frozen Organic Fruit, Blueberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$10.49
-"Organic Berry Blend, 32 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$10.99
-"Organic Berry Blend, 32 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$10.99
 "Organic Berry Blend, 32 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$10.99
 "Frozen Organic Fruit, Strawberries - Whole",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$8.39
-"Frozen Organic Fruit, Strawberries - Whole",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$8.39
-"Frozen Organic Fruit, Mango - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$8.49
-"Frozen Organic Fruit, Mango - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$8.49
 "Frozen Organic Fruit, Mango - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$8.49
 "Fresh Frozen Wild Blueberries, 3 lb",Wyman's,Frozen Foods,Frozen Fruits & Vegetables,$14.99
-"Frozen Organic Fruit, Wild Blueberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$4.99
 "Frozen Organic Fruit, Wild Blueberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$4.99
 "Frozen Organic Vegetables, Green Peas - No Salt Added",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.49
 "Frozen Organic Vegetables, Sweet Yellow Corn - No Salt Added",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$1.99
@@ -5865,30 +5817,19 @@ Organic Frozen Tropical Fruit Medley,365 by Whole Foods Market,Frozen Foods,Froz
 "Frozen Organic Vegetables, Mixed - No Salt Added",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$1.99
 "Frozen Organic Vegetables, Broccoli Florets",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.29
 "Frozen Fruit, Dark Sweet Cherries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
-"Frozen Fruit, Dark Sweet Cherries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
 "Frozen Organic Vegetables, Mixed Mushrooms",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
-"Frozen Organic Fruit, Raspberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
-"Frozen Organic Fruit, Raspberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
 "Frozen Organic Fruit, Raspberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
 "Organic Chopped Spinach, 16 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.39
 "Frozen Fruit, Blueberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
 "Frozen Organic Vegetables, Broccoli Florets",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$4.49
 "Organic Seasoned Hashed Browns, 16 oz",Alexia Foods,Frozen Foods,Frozen Fruits & Vegetables,$4.49
 "Organic Dark Sweet Cherries, 10 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.79
-"Organic Dark Sweet Cherries, 10 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.79
-"Frozen Organic Fruit, Peaches - Sliced",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.29
-"Frozen Organic Fruit, Peaches - Sliced",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.29
 "Frozen Organic Fruit, Peaches - Sliced",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.29
 Organic Berry Blend Frozen Fruit,365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$4.19
-"Frozen Organic Fruit, Strawberries - Whole",365 BY WFM,Frozen Foods,Frozen Fruits & Vegetables,$3.29
-Organic Berry Blend Frozen Fruit,365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$4.19
-"Organic Dark Sweet Cherries, 10 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.79
 "Frozen Organic Fruit, Strawberries - Whole",365 BY WFM,Frozen Foods,Frozen Fruits & Vegetables,$3.29
 "Frozen Organic Fruit, Strawberries - Whole",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.29
 "Frozen Fruit, Pineapples - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.49
-"Frozen Fruit, Pineapples - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.49
 "Original Blend Smoothie Superfruit Pack, 100g, 4-Pack, 14.1 oz",Sambazon,Frozen Foods,Frozen Fruits & Vegetables,$6.69
-"Frozen Fruit, Pineapples - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.49
 "Frozen Organic Vegetables, Peas & Carrots",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.49
 "Frozen Organic Vegetables, Fire-Roasted Corn",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
 "Organic Dragonfruit Superfruit Smoothie Pack, 14 oz",Pitaya Plus,Frozen Foods,Frozen Fruits & Vegetables,$6.69
@@ -5903,13 +5844,9 @@ Frozen Organic Cut Green Beans,365 by Whole Foods Market,Frozen Foods,Frozen Fru
 "Frozen Organic Fruit, Mango - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.29
 "Frozen Fruit, Strawberries - Whole",365 BY WFM,Frozen Foods,Frozen Fruits & Vegetables,$2.49
 "Frozen Organic Vegetables, Sweet White Corn - No Salt Added",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$1.99
-"Frozen Fruit, Strawberries - Whole",365 BY WFM,Frozen Foods,Frozen Fruits & Vegetables,$2.49
-"Frozen Fruit, Strawberries - Whole",365 BY WFM,Frozen Foods,Frozen Fruits & Vegetables,$2.49
 "Frozen Fruit, Mango - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.99
 "Frozen Fruit, Raspberries",365 BY WFM,Frozen Foods,Frozen Fruits & Vegetables,$3.99
 "Raspberries, 12 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.99
-"Frozen Fruit, Mango - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.99
-"Frozen Fruit, Mango - Chunks",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.99
 Frozen Riced Cauliflower - Stir Fry Style,365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$3.19
 "Frozen Organic Fruit, Blackberries",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$4.69
 "Organic Whole Leaf Spinach, 16 oz",365 by Whole Foods Market,Frozen Foods,Frozen Fruits & Vegetables,$2.69
@@ -6221,8 +6158,6 @@ Alden's Ice Cream Organic Strawberry Ice Cream (1.5 Qt),Alden's Organic Ice Crea
 "Brownie Batter Ice Cream, 1 pint",365 by Whole Foods Market,Frozen Foods,Ice Cream & Frozen Desserts,$3.99
 "Peanut Butter Light Ice Cream, 1 pint",Halo Top Creamery,Frozen Foods,Ice Cream & Frozen Desserts,$5.49
 "Sea Salt Caramel Light Ice Cream, 1 pint",Halo Top Creamery,Frozen Foods,Ice Cream & Frozen Desserts,$5.49
-"Sea Salt Caramel Light Ice Cream, 1 pint",Halo Top Creamery,Frozen Foods,Ice Cream & Frozen Desserts,$5.49
-"Peanut Butter Light Ice Cream, 1 pint",Halo Top Creamery,Frozen Foods,Ice Cream & Frozen Desserts,$5.49
 "New York Cheezecake, 14.1 oz",Daiya Foods,Frozen Foods,Ice Cream & Frozen Desserts,$7.99
 "Dirty Mint Chip Frozen Dessert Sandwich, 5.8 fl oz",Coolhaus,Frozen Foods,Ice Cream & Frozen Desserts,$4.99
 "Horchata Frozen Dessert Sandwich, 1 frozen dessert sandwich",Coolhaus,Frozen Foods,Ice Cream & Frozen Desserts,$4.99
@@ -6502,7 +6437,6 @@ Organic 38% Milk Chocolate Bar,365 by Whole Foods Market,"Snacks, Chips, Salsas 
 "Hazelnut Truffle Dark Chocolate, 3 oz",Divine Chocolate,"Snacks, Chips, Salsas & Dips",Candy & Chocolate,$3.99
 "Organic Milk Chocolate Toffee And Sea Salt, 2.5 oz",Tcho,"Snacks, Chips, Salsas & Dips",Candy & Chocolate,$4.19
 "Cinnamon Gum, 1 each",PUR,"Snacks, Chips, Salsas & Dips",Candy & Chocolate,$3.99
-"Dark Chocolate Caramel Peanut Nougat Bars, 3.4 oz",UNREAL,"Snacks, Chips, Salsas & Dips",Candy & Chocolate,$6.49
 "Dark Chocolatey Sea Salt And Almond Bar, 1.59 oz",Love Good Fats,"Snacks, Chips, Salsas & Dips",Candy & Chocolate,$2.69
 "Dark Chocolate Mini Graham Crackers, 11.5 oz",Quality Confections,"Snacks, Chips, Salsas & Dips",Candy & Chocolate,$9.99
 "Dark Chocolate Raisins, 3 oz",365 by Whole Foods Market,"Snacks, Chips, Salsas & Dips",Candy & Chocolate,$2.29
@@ -6665,7 +6599,6 @@ Classic Sea Salt Pretzels,Quinn Snacks,"Snacks, Chips, Salsas & Dips",Chips,$4.7
 "Organic Friends Bunny Grahams, 7 oz",Annie's Homegrown,"Snacks, Chips, Salsas & Dips",Chips,$4.29
 "Yellow Tortilla Chips, 16 oz",Garden of Eatin',"Snacks, Chips, Salsas & Dips",Chips,$6.29
 "Blue Potato Chips, 5 ounce",Terra Chips,"Snacks, Chips, Salsas & Dips",Chips,$3.69
-"Blue Potato Chips, 5 ounce",Terra Chips,"Snacks, Chips, Salsas & Dips",Chips,$3.69
 "Original Chomperz, 1 each",SeaSnax,"Snacks, Chips, Salsas & Dips",Chips,$4.29
 "Organic Sea Salt Vinegar Plantain Chips, 5 oz",Barnana,"Snacks, Chips, Salsas & Dips",Chips,$4.99
 "Thin & Crispy Cheddar Sour Cream Potato Chips, 6 oz",BOULDER CANYON AUTHENTIC FOODS,"Snacks, Chips, Salsas & Dips",Chips,$3.79
@@ -6686,7 +6619,6 @@ Classic Sea Salt Pretzels,Quinn Snacks,"Snacks, Chips, Salsas & Dips",Chips,$4.7
 "Sea Salt Cauliflower Chips, 3.5 oz",From The Ground Up,"Snacks, Chips, Salsas & Dips",Chips,$4.29
 "Fiery Hot Bean Chips, 5.5 oz",Beanfields,"Snacks, Chips, Salsas & Dips",Chips,$3.99
 "Sour Cream & Onion Bean Chips, 5.5 oz",Beanfields,"Snacks, Chips, Salsas & Dips",Chips,$3.99
-"Fiery Hot Bean Chips, 5.5 oz",Beanfields,"Snacks, Chips, Salsas & Dips",Chips,$3.99
 "Sweet Potato Chips, 3 oz",Brad's Plant Based,"Snacks, Chips, Salsas & Dips",Chips,$4.99
 "Sour Cream & Onion Vegetable Chips, 5 oz",TERRA,"Snacks, Chips, Salsas & Dips",Chips,$4.29
 "Screamin' Hot Vegetable Chips, 5 oz",TERRA,"Snacks, Chips, Salsas & Dips",Chips,$4.29
@@ -6992,7 +6924,6 @@ Organic Cheddar Bunnies 12pk,Annie's Homegrown,"Snacks, Chips, Salsas & Dips",Cr
 "Chocolate Chip 6 Count, 14.4 oz",Clif Bar,"Snacks, Chips, Salsas & Dips",Nutrition & Granola Bars,$7.49
 "Organic Vanilla Crispy Squares, 4.68 oz",MadeGood,"Snacks, Chips, Salsas & Dips",Nutrition & Granola Bars,$4.49
 "Organic Blueberry Banana Sweet Potato Smart Bars, 0.84 oz",Cerebelly,"Snacks, Chips, Salsas & Dips",Nutrition & Granola Bars,$5.49
-"Organic Vanilla Crispy Squares, 4.68 oz",MadeGood,"Snacks, Chips, Salsas & Dips",Nutrition & Granola Bars,$4.49
 "Organic Strawberry Beet Smart Bars, 0.84 oz",Cerebelly,"Snacks, Chips, Salsas & Dips",Nutrition & Granola Bars,$5.49
 "Raspberry Gluten Free Fig Bar Box, 12 oz",Nature's Bakery,"Snacks, Chips, Salsas & Dips",Nutrition & Granola Bars,$5.99
 "Annie's Organic Original Crispy Snack Bars, 3.9 oz",Annie's Homegrown,"Snacks, Chips, Salsas & Dips",Nutrition & Granola Bars,$4.79
@@ -7406,8 +7337,6 @@ Organic Flax Seeds,Sunfood™,"Snacks, Chips, Salsas & Dips","Nuts, Seeds & Drie
 "Sprouted Pumpkin Seeds, 14 oz",Go Raw,"Snacks, Chips, Salsas & Dips","Nuts, Seeds & Dried Fruit",$13.99
 "Organic Unsweetened Dried Pineapple, 8 oz",365 Everyday Value®,"Snacks, Chips, Salsas & Dips","Nuts, Seeds & Dried Fruit",$5.99
 "Marcona Almonds, 4 oz",Mitica,"Snacks, Chips, Salsas & Dips","Nuts, Seeds & Dried Fruit",$6.99
-"Australian Naked Ginger, 11 oz",Aurora Natural,"Snacks, Chips, Salsas & Dips","Nuts, Seeds & Dried Fruit",$9.29
-"Blueberry Blaze Trail Mix, 14 oz",365 Everyday Value®,"Snacks, Chips, Salsas & Dips","Nuts, Seeds & Dried Fruit",$7.99
 "Skinny Pack 6pk, 3.9 oz",SkinnyPop,"Snacks, Chips, Salsas & Dips","Popcorn, Puffs & Rice Cakes",$5.99
 "Popcorn Himalayan Pink Salt, 5 oz",LesserEvil,"Snacks, Chips, Salsas & Dips","Popcorn, Puffs & Rice Cakes",$3.79
 "Pirates Booty Aged White Cheddar (6 Pk), 1 each",Pirate Brands,"Snacks, Chips, Salsas & Dips","Popcorn, Puffs & Rice Cakes",$7.49
@@ -7823,7 +7752,6 @@ Organic Pacific Rim Vienna Roast Ground Coffee (10oz),365 Everyday Value®,Bever
 "Organic Instant Coffee, 3.53 oz",Mount Hagen,Beverages,Coffee,$10.49
 "Organic Hundred Mile Blend Coffee, 12 oz",Stumptown Coffee Roasters,Beverages,Coffee,$17.99
 "Organic Alma De La Tierra Gd Coffee, 10.5 oz",Peet's Coffee,Beverages,Coffee,$11.99
-"Nizza Coffee, 12 oz",La Colombe,Beverages,Coffee,$11.99
 "Monaco Whole Bean Coffee, 12 oz",La Colombe,Beverages,Coffee,$11.99
 "Mocha Java Whole Bean Coffee, 12 oz",Allegro®,Beverages,Coffee,$10.49
 "Mentalist Ground Coffee, 12 oz",Bulletproof,Beverages,Coffee,$15.79
@@ -8086,9 +8014,7 @@ Stanton Orchands Tart Cherry Concentrate (16 Oz),Stanton Orchards,Beverages,Juic
 "All Natural Lemonade, 52 fl oz",Simply Beverages,Beverages,Juice,$2.99
 "Honest Kids Organic Appley Ever After Juice Drink Boxes, 6 fl oz boxes",Honest Tea,Beverages,Juice,$4.69
 "Just Black Cherry Juice, 32 fl oz",R.W. Knudsen Family,Beverages,Juice,$6.69
-"Organic Celery Pear Ginger Juice, 32 fl oz",R.W. Knudsen Family,Beverages,Juice,$7.99
 "Organic Coconut Water & Watermelon Beverage, 12 fl oz",Harmless Harvest,Beverages,Juice,$3.99
-"Organic Carrot Orange Turmeric Juice, 32 fl oz",Whole Foods Market,Beverages,Juice,$3.49
 "Organic Coconut Water, 33.8 fl oz",Vita Coco,Beverages,Juice,$4.99
 "Organic Cranberry Juice, 32 fl oz",365 by Whole Foods Market,Beverages,Juice,$6.29
 "R.w. Knudsen Organic Cranberry Pomegranate Juice, 32 fl oz",R.W. Knudsen Family,Beverages,Juice,$5.79
@@ -8096,14 +8022,12 @@ Stanton Orchands Tart Cherry Concentrate (16 Oz),Stanton Orchards,Beverages,Juic
 "Ginger Juice Blend, 8 fl oz",Santa Cruz Organic,Beverages,Juice,$6.79
 "Organic Tart Cherry Juice, 32 fl oz",365 by Whole Foods Market,Beverages,Juice,$4.79
 Organic Tomato Juice (32 Fl Oz),R.W. Knudsen Family,Beverages,Juice,$4.19
-"Organic Pulp Free Orange Juice, 52 fl oz",Uncle Matt's Organic,Beverages,Juice,$6.99
 "Organic Tart Cherry Juice Concentrate, 12 fl oz",Omena Organics,Beverages,Juice,$19.99
 "Just Cranberry Juice, 32 fl oz",R.W. Knudsen Family,Beverages,Juice,$8.49
 "Lemonade, 15.2 fl oz",365 Everyday Value®,Beverages,Juice,$2.29
 "Aronia Berry Blackberry Organic Cold-Pressed Energy Elixir with Probiotics, 16 fl oz",Garden of Flavor,Beverages,Juice,$5.99
 "Naked Mighty Mango Juice, 64 fl oz",Naked Juice,Beverages,Juice,$8.99
 "Original Orange Juice, 89 fl oz",Simply Orange,Beverages,Juice,$7.49
-"Coconut Water 4pk, 16.9 fl oz",Vita Coco,Beverages,Juice,$9.99
 "Original 100% Orange Juice, 52 fl oz",Tropicana,Beverages,Juice,$3.99
 "Organic Very Veggie Juice, 32 fl oz",R.W. Knudsen Family,Beverages,Juice,$4.39
 Organic Gingerade 16oz,GT's Synergy Kombucha,Beverages,Kombucha & Tea,$3.49
@@ -8342,7 +8266,6 @@ Plant-Based Protein Shake Cafe Mocha,Evolve,Beverages,"Sports, Energy & Nutritio
 "Organic Tropical Uprising Yerba Mate, 15.5 fl oz",Guayaki,Beverages,Tea,$3.19
 "Organic Orange Exuberance Yerba Mate, 15.5 fl oz",Guayaki,Beverages,Tea,$3.19
 Ancient Mushroom Elixir Root Beer 16oz,GT's Alive,Beverages,Tea,$3.49
-Ancient Mushroom Elixir Root Beer 16oz,GT's Alive,Beverages,Tea,$3.49
 "Organic Sparkling Cranberry Pomegranate Yerba Mate, 12 fl oz",Guayaki,Beverages,Tea,$2.79
 "Honest Moroccan Mint Green Tea, 16 fl oz",Honest Tea,Beverages,Tea,$1.99
 "Organic Lori's Lemon Tea, 16 fl oz",Honest Tea,Beverages,Tea,$1.99
@@ -8416,7 +8339,6 @@ Ancient Mushroom Elixir Root Beer 16oz,GT's Alive,Beverages,Tea,$3.49
 "Organic Matcha Singles, 0.63 oz",Mighty Leaf,Beverages,Tea,$16.49
 "Organic Matcha Green Tea, 16 wrapped tea bags",Traditional Medicinals,Beverages,Tea,$5.29
 "Bengal Spice Tea, 1.7 oz",Celestial Seasonings,Beverages,Tea,$2.99
-"Organic Matcha Green Tea, 16 wrapped tea bags",Traditional Medicinals,Beverages,Tea,$5.29
 "Organic Lemon Echinacea Throat Coat Herbal Tea, 1.13 oz",Traditional Medicinals,Beverages,Tea,$5.69
 "Soothing Caramel Bedtime, 1.07 oz",Yogi®,Beverages,Tea,$5.49
 "Organic Latte Chai, 32 fl oz",Tazo,Beverages,Tea,$4.99
@@ -8526,7 +8448,6 @@ Ancient Mushroom Elixir Root Beer 16oz,GT's Alive,Beverages,Tea,$3.49
 "Pomegranate Green Tea Superfruit Tea, 2.65 oz",The Republic of Tea,Beverages,Tea,$11.79
 "Lion's Mane Mushroom Elixir, 0.1 oz",Four Sigmatic,Beverages,Tea,$1.99
 "Iced Tea Lemon Lokelani Rose, 14 fl oz",Shaka Tea,Beverages,Tea,$2.69
-"Iced Tea Lemon Lokelani Rose, 14 fl oz",Shaka Tea,Beverages,Tea,$2.69
 "Organic Blueberry Green Tea, 2.65 oz",The Republic of Tea,Beverages,Tea,$11.79
 "Citrus Sunrise Herbal Tea, 1.7 oz",Celestial Seasonings,Beverages,Tea,$2.99
 "Japanese Green Tea Sencha Shot, 6.4 fl oz",Ito En,Beverages,Tea,$1.69
@@ -8599,7 +8520,6 @@ Ancient Mushroom Elixir Root Beer 16oz,GT's Alive,Beverages,Tea,$3.49
 "Peppermint Tea, 1.1 oz",Celestial Seasonings,Beverages,Tea,$2.99
 "Organic Roasted Dandelion Root Tea, 0.85 oz",Traditional Medicinals,Beverages,Tea,$5.29
 "Organic Throat Coat Herbal Tea, 1.13 oz",Traditional Medicinals,Beverages,Tea,$5.69
-"Organic Nighty Night Tea, 0.85 oz",Traditional Medicinals,Beverages,Tea,$5.69
 "Organic Northwest Minty Green Tea, 20 tea bags",ALLEGRO TEA,Beverages,Tea,$4.69
 "Original Tulsi Holy Basil Tea, 1.14 oz",Organic India,Beverages,Tea,$5.99
 "Organic Wellness Relaxing Chamomile Tea, 20 tea bags",ALLEGRO TEA,Beverages,Tea,$4.69
@@ -8762,7 +8682,6 @@ Spring Water 12 Pack,Starkey Spring Water,Beverages,"Water, Seltzer & Sparkling 
 "Variety, 12 cans",White Claw,"Wine, Beer & Spirits",Beer,$17.49
 "Premium Lager Bottles 6pk, 11.2 fl oz",Stella Artois,"Wine, Beer & Spirits",Beer,$9.99
 "Modelo Especial, 12 fl oz",Grupo Modelo,"Wine, Beer & Spirits",Beer,$16.49
-"Variety, 12 cans",White Claw,"Wine, Beer & Spirits",Beer,$17.99
 "Run Wild Non - Alcoholic IPA, 12 fl oz",ATHLETIC BREWING CO,"Wine, Beer & Spirits",Beer,$10.99
 Draught in Can 4PK 14.9oz,Guinness,"Wine, Beer & Spirits",Beer,$8.49
 "Corona Extra, 6 bottles",Corona Extra,"Wine, Beer & Spirits",Beer,$9.49
@@ -9234,7 +9153,6 @@ Hot to Trot Red Blend 750ml,14 Hands,"Wine, Beer & Spirits",Wine,$9.49
 "Cabernet Sauvignon, 750 ml",Don Simon,"Wine, Beer & Spirits",Wine,$4.99
 "Cremant Rose, 750 ml",PIERRE SPARR,"Wine, Beer & Spirits",Wine,$23.99
 "Chardonnay, 750 ml",Don Simon,"Wine, Beer & Spirits",Wine,$4.99
-"Red Blend, 750 ml",19 Crimes,"Wine, Beer & Spirits",Wine,$10.99
 "The Franc Cabernet Franc, 750 ml",CONSENTINO,"Wine, Beer & Spirits",Wine,$14.99
 "Chardonnay Gravettes, 750 ml",Ardeche,"Wine, Beer & Spirits",Wine,$12.99
 "Legacy Red Wine, 750 ml",Josh Cellars,"Wine, Beer & Spirits",Wine,$13.99
