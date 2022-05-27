@@ -25,7 +25,6 @@ def load_all_products(driver):
             )
             click(load_more, driver)
         except:
-            print("All products loaded")
             break
     return driver.page_source
 
@@ -105,7 +104,6 @@ def parse_subcategories(driver, category, category_url, csv_writer):
         subcategory = (
             subcategory_elements[i].find_element(by=By.XPATH, value=".//span").text
         )
-        print(category, subcategory)
 
         click(subcategory_elements[i], driver)
 
