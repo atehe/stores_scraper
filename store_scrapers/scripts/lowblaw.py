@@ -10,41 +10,82 @@ from fake_useragent import UserAgent
 import undetected_chromedriver as uc
 import logging, json, os, sys, time, random
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+
+def extract_product_id(url):
+    last_slash_index = url[::-1].index("/")
+    return url[-last_slash_index:]
 
 
 driver = uc.Chrome(version_main=100)
-driver.get("https://www.loblaws.ca/")
 
-hamburger_button = WebDriverWait(driver, 60).until(
-    EC.element_to_be_clickable((By.XPATH, "//button[@class='mobile-menu__button']"))
+
+def get_subcategories(driver):
+    driver.get("https://www.loblaws.ca/")
+    WebDriverWait(driver, 100).until(
+        EC.presence_of_element_located((By.XPATH, "//nav[@class='primary-nav']"))
+    )
+
+    page_response = Selector(text=driver.page_source)
+
+    categories = page_response.xpath(
+        "//li[@class='primary-nav__list__item primary-nav__list__item--with-children']"
+    )
+    subcategories_list = []
+    for category in categories:
+        category_name = category.xpath("./button/span//text()").get()
+
+        subcategories = category.xpath("./ul/li")
+        for subcategory in subcategories:
+            subcategory_name = subcategory.xpath("./a/span//text()").get()
+            subcategory_url = subcategory.xpath("./a/@href").get()
+
+            subcategories_list.append(
+                {
+                    "category": category,
+                    "subcategory": subcategory,
+                    "subcategory_url": subcategory_url,
+                }
+            )
+    return subcategories_list
+
+
+def extract_products(driver, url):
+    driver.get(url)
+    WebDriverWait(driver, 100).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, "//li[@class='product-tile-group__list__item']")
+        )
+    )
+
+    product_response = Selector(text=driver.page_source)
+    products = product_response.xpath("//li[@class='product-tile-group__list__item']")
+
+    for product in products:
+
+        brand = product.xpath(
+            ".//span[@class='product-name__item product-name__item--brand']//text()"
+        ).get()
+        name = product.xpath(
+            ".//span[@class='product-name__item product-name__item--name']//text()"
+        ).get()
+        price = "".join(
+            product.xpath(".//div[@class='selling-price-list__item']//text()").getall()
+        )
+        product_url = product.xpath(
+            ".//a[@class='product-tile__details__info__name__link']/@href"
+        ).get()
+        if not product_url.startswith("http"):
+            product_url = f"https://www.loblaws.ca{product_url}"
+        product_id = extract_product_id(product_url)
+
+        print(brand, name, price, product_url, product_id)
+
+    # loadmore = //button[@class='primary-button primary-button--load-more-button']
+
+
+extract_products(
+    driver,
+    "https://www.loblaws.ca/food/fruits-vegetables/c/28000?navid=flyout-L2-fruits-vegetables",
 )
-# click(hamburger, driver)
-
-print("hello")
-category_elements = driver.find_elements(
-    by=By.XPATH,
-    value="//li[@class='primary-nav__list__item primary-nav__list__item--with-children']",
-)
-print(category_elements)
-
-for category_element in category_elements:
-    print("hello")
-    category = category_element.find_element(by=By.XPATH, value="./button/span").text
-    subcategory_elements = category_element.find_elements(by=By.XPATH, value="./ul/li")
-
-    for subcategory_element in subcategory_elements:
-        subcategory = subcategory_element.find_element(
-            by=By.XPATH, value="./a/span"
-        ).text
-        subcategory_url = subcategory_element.find_element(
-            by=By.XPATH, value="./a"
-        ).get_attribute("href")
-
-        print(f"{category}|{subcategory}|{subcategory_url}")
-
-
-# product_response = Selector(text=driver.page_source)
-# products = product_response.xpath("//li[@class='product-tile-group__list__item']")
-
-# for product in products:
-#     brand = product.xpath("//span[@class='product-name__item product-name__item--brand']//text()").get()
