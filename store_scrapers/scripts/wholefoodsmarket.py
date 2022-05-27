@@ -32,20 +32,17 @@ def load_all_products(driver):
 
 def set_location(driver, postal_code):
     try:
-        print("hello")
         location_popup = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//input[@id='pie-store-finder-modal-search-field']")
             )
         )
-        print("hello2")
         location_popup.send_keys(postal_code)
         search_result = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//li[@class='wfm-search-bar--list_item']")
             )
         )
-        print("hello")
         click(search_result, driver)
 
     except:
@@ -71,14 +68,13 @@ def extract_products(category, subcategory, csv_writer, page):
         )
         if not product_url.startswith("http"):
             product_url = f"https://www.wholefoodsmarket.com{product_url}"
-        # regular_price = product.xpath(".//span[@class='regular_price']/b/text()").get()
-        regular_price = " ".join(
+        regular_price = "".join(
             product.xpath(".//li[@data-testid='regular-price']//text()").getall()
-        )
+        ).strip("Regular")
 
-        print((name, brand, category, subcategory, ASIN, regular_price, product_url))
-        # csv_writer.writerow((name, brand, category, subcategory, regular_price))
-        # TODO: write data with csv writer
+        csv_writer.writerow((name, brand, category, subcategory, regular_price))
+
+    logging.info(f"Extraction complete for {category}: {subcategory}...")
 
 
 def get_categories_dict(driver):
@@ -92,6 +88,7 @@ def get_categories_dict(driver):
         category = element.find_element(by=By.XPATH, value=".//span").text
         category_url = element.get_attribute("href")
         categories_dict[category] = category_url
+    print(categories_dict)
     return categories_dict
 
 
@@ -106,13 +103,9 @@ def parse_subcategories(driver, category, category_url, csv_writer):
         subcategory = (
             subcategory_elements[i].find_element(by=By.XPATH, value=".//span").text
         )
-        print(subcategory)
+        print(category, subcategory)
 
-        action = ActionChains(driver)
-        action.move_to_element(to_element=subcategory_elements[i])
-        action.click()
-        action.perform()
-        time.sleep(2)
+        click(subcategory_elements[i], driver)
 
         page = load_all_products(driver)
         extract_products(category, subcategory, csv_writer, page)
@@ -121,7 +114,10 @@ def parse_subcategories(driver, category, category_url, csv_writer):
             by=By.XPATH,
             value="(//nav[@aria-label='category and filter navigation']//a[@aria-expanded='true'])[1]",
         )
-        click(back, driver)
+        if category == "Beverages" and subcategory == "Coffee":
+            driver.get(category_url)
+        else:
+            click(back, driver)
 
         subcategory_elements = driver.find_elements(
             by=By.XPATH,
@@ -145,9 +141,7 @@ if __name__ == "__main__":
 
     driver = uc.Chrome(version_main=100)
 
-    driver.get(
-        "https://www.wholefoodsmarket.com/products/dairy-eggs/cheese?diets=vegan"
-    )
+    driver.get("https://www.wholefoodsmarket.com/products")
+    driver.maximize_window()
     set_location(driver, 600)
-    page = load_all_products(driver)
-    extract_products("category", "subcategory", "csv_writer", page)
+    scrape_wholefoodsmarket(driver, "wholefoods.csv")
