@@ -10,7 +10,10 @@ from fake_useragent import UserAgent
 import logging, json, os, sys, time, random
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from ..settings import SELENIUM_DRIVER_EXECUTABLE_PATH
+
+
+logging.basicConfig(level=logging.INFO)
+DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def extract_product_id(url):
@@ -46,25 +49,27 @@ def get_subcategories(driver):
         "//li[@class='primary-nav__list__item primary-nav__list__item--with-children']"
     )
     subcategories_list = []
-    for category in categories:
+    for category in categories[1:]:
         category_name = category.xpath("./button/span//text()").get()
 
         subcategories = category.xpath("./ul/li")
         for subcategory in subcategories:
             subcategory_name = subcategory.xpath("./a/span//text()").get()
             subcategory_url = subcategory.xpath("./a/@href").get()
+            if not subcategory_url.startswith("http"):
+                subcategory_url = f"https://www.loblaws.ca{subcategory_url}"
 
             subcategories_list.append(
                 {
-                    "category": category,
-                    "subcategory": subcategory,
+                    "category": category_name,
+                    "subcategory": subcategory_name,
                     "subcategory_url": subcategory_url,
                 }
             )
     return subcategories_list
 
 
-def extract_products(driver, category, subcategory, subategory_url, csv_writer):
+def extract_products(driver, category, subcategory, subcategory_url, csv_writer):
     driver.get(subcategory_url)
     try:
         WebDriverWait(driver, 100).until(
@@ -117,17 +122,19 @@ def scrape_loblaws(driver, output_csv):
         csv_writer.writerow(headers)
 
         subcategories_list = get_subcategories(driver)
+        driver.maximize_window()
+
         for subcategories_dict in subcategories_list:
             category = subcategories_dict["category"]
             subcategory = subcategories_dict["subcategory"]
             subcategory_url = subcategories_dict["subcategory_url"]
 
-            extract_products(driver, category, subcategory, subategory_url, csv_writer)
+            extract_products(driver, category, subcategory, subcategory_url, csv_writer)
 
 
 if __name__ == "__main__":
 
-    service = Service(SELENIUM_DRIVER_EXECUTABLE_PATH)
+    service = Service(DRIVER_EXECUTABLE_PATH)
     driver = webdriver.Chrome(service=service)
 
     scrape_loblaws(driver, "loblaws_products.csv")

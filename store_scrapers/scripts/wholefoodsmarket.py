@@ -6,13 +6,13 @@ from scrapy.selector import Selector
 from selenium.webdriver.common.action_chains import ActionChains
 from csv import writer
 from selenium.webdriver.chrome.options import Options
-from fake_useragent import UserAgent
-import undetected_chromedriver as uc
+from store_scrapers.settings import SELENIUM_DRIVER_EXECUTABLE_PATH
 import logging, json, os, sys, time, random
 from selenium import webdriver
 
 
 logging.basicConfig(level=logging.INFO)
+DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def load_all_products(driver):
@@ -147,7 +147,8 @@ def scrape_wholefoodsmarket(driver, output_csv):
 
 if __name__ == "__main__":
 
-    driver = uc.Chrome(version_main=100)
+    service = Service(DRIVER_EXECUTABLE_PATH)
+    driver = webdriver.Chrome(service=service)
 
     driver.get("https://www.wholefoodsmarket.com/products")
     driver.maximize_window()

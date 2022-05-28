@@ -12,6 +12,7 @@ import time
 from store_scrapers.setting import SELENIUM_DRIVER_EXECUTABLE_PATH
 
 logging.basicConfig(level=logging.INFO)
+DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def get_categories(driver):
@@ -136,7 +137,7 @@ def scrape_woolworths(driver):
 
 if __name__ == "__main__":
     # driver configs
-    service = Service(SELENIUM_DRIVER_EXECUTABLE_PATH)
+    service = Service(DRIVER_EXECUTABLE_PATH)
     driver = webdriver.Chrome(service=service)
     driver.maximize_window()  # more products are rendered in bigger window
 
