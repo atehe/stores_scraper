@@ -54,84 +54,17 @@ def load_all(driver):
     return driver.page_source
 
 
-def get_subcategories(driver):
-    driver.get("https://www.loblaws.ca/")
-    WebDriverWait(driver, 120).until(
-        EC.presence_of_element_located((By.XPATH, "//nav[@class='primary-nav']"))
-    )
+def parse_nav_dept(driver, dept_data_code, output_list):
 
-    # page_response = Selector(text=driver.page_source)
-
-    # categories = page_response.xpath(
-    #     "//li[@class='primary-nav__list__item primary-nav__list__item--with-children']"
-    # )
-    # subcategories_list = []
-    # for category in categories[
-    #     2:-9
-    # ]:  # first 2 and last 3 categories in nav bar not parsed
-    #     category_name = category.xpath("./button/span//text()").get()
-
-    #     subcategories = category.xpath("./ul/li")
-    #     for subcategory in subcategories:
-    #         subcategory_name = subcategory.xpath("./a/span//text()").get()
-    #         subcategory_url = subcategory.xpath("./a/@href").get()
-    #         if not subcategory_url.startswith("http"):
-    #             subcategory_url = f"https://www.loblaws.ca{subcategory_url}"
-    #         subcategories_list.append(
-    #             {
-    #                 "category": category_name,
-    #                 "subcategory": subcategory_name,
-    #                 "subcategory_url": subcategory_url,
-    #             }
-    #         )
-    subcategories_list = []
-    # non_food_dept only show in full window
-    driver.maximize_window()
-
-    # food_dept = WebDriverWait(driver, 10).until(
-    #     EC.element_to_be_clickable(
-    #         (By.XPATH, "//button[@data-code='xp-455-food-departments']")
-    #     )
-    # )
-    # hover(driver, food_dept)
-    # category_elements = driver.find_elements(
-    #     by=By.XPATH,
-    #     value="//button[@data-code='xp-455-food-departments']/parent::li/ul/li",
-    # )
-    # for category_elem in category_elements:
-    #     hover(driver, category_elem)
-    #     category = category_elem.find_element(by=By.XPATH, value="./a/span").text
-    #     if category.lower().startswith('seasonal):
-    #           continue
-    #     subcategory_elements = driver.find_elements(
-    #         by=By.XPATH,
-    #         value="//ul[@data-code='xp-455-food-departments']//li[@class='primary-nav__list__item']",
-    #     )
-    #     for subcategory_elem in subcategory_elements:
-    #         subcategory = subcategory_elem.find_element(
-    #             by=By.XPATH, value="./a/span"
-    #         ).text
-    #         subcategory_url = subcategory_elem.find_element(
-    #             by=By.XPATH, value="./a"
-    #         ).get_attribute("href")
-
-    #         subcategories_list.append(
-    #             {
-    #                 "category": category,
-    #                 "subcategory": subcategory,
-    #                 "subcategory_url": subcategory_url,
-    #             }
-    #         )
-
-    non_food_dept = WebDriverWait(driver, 10).until(
+    dept = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
-            (By.XPATH, "//button[@data-code='xp-455-nonfood-departments']")
+            (By.XPATH, f"//button[@data-code='{dept_data_code}']")
         )
     )
-    hover(driver, non_food_dept)
+    hover(driver, dept)
     category_elements = driver.find_elements(
         by=By.XPATH,
-        value="//button[@data-code='xp-455-nonfood-departments']/parent::li/ul/li",
+        value=f"//button[@data-code='{dept_data_code}']/parent::li/ul/li",
     )
     for category_elem in category_elements:
         hover(driver, category_elem)
@@ -144,7 +77,7 @@ def get_subcategories(driver):
 
         subcategory_elements = driver.find_elements(
             by=By.XPATH,
-            value="//ul[@data-code='xp-455-nonfood-departments']//li[(@class='primary-nav__list__item' and not (@style)) or (@class='primary-nav__list__item'  and (following-sibling::li[1][@style='margin-top: 10px; padding-bottom: 0px;']) and (@style='margin-top: 10px; padding-bottom: 0px;'))]",
+            value=f"//ul[@data-code='{dept_data_code}']//li[(@class='primary-nav__list__item' and not (@style)) or (@class='primary-nav__list__item'  and (following-sibling::li[1][@style='margin-top: 10px; padding-bottom: 0px;']) and (@style='margin-top: 10px; padding-bottom: 0px;'))]",
         )
         for subcategory_elem in subcategory_elements:
             subcategory = subcategory_elem.find_element(
@@ -155,13 +88,30 @@ def get_subcategories(driver):
             ).get_attribute("href")
             print(category, subcategory, subcategory_url)
 
-            subcategories_list.append(
+            output_list.append(
                 {
                     "category": category,
                     "subcategory": subcategory,
                     "subcategory_url": subcategory_url,
                 }
             )
+
+
+def get_subcategories(driver):
+    driver.maximize_window()
+    driver.get("https://www.loblaws.ca/")
+
+    WebDriverWait(driver, 120).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, f"//button[@data-code='xp-455-food-departments']")
+        )
+    )
+    subcategories_list = []
+    parse_nav_dept(driver, "xp-455-food-departments", subcategories_list)
+    parse_nav_dept(driver, "xp-455-nonfood-departments", subcategories_list)
+
+    print(subcategories_list)
+
     return subcategories_list
 
 
@@ -221,9 +171,9 @@ def scrape_loblaws(driver, output_csv):
         )
         csv_writer.writerow(headers)
 
-        subcategories_list = get_subcategories(driver)
+        output_list = get_subcategories(driver)
 
-        for subcategories_dict in subcategories_list[7:]:
+        for subcategories_dict in output_list[7:]:
             category = subcategories_dict["category"]
             subcategory = subcategories_dict["subcategory"]
             subcategory_url = subcategories_dict["subcategory_url"]
