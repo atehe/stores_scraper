@@ -6,35 +6,30 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
 from scrapy.selector import Selector
 from selenium.webdriver.chrome.service import Service
-import logging
-import csv
-import time
-from store_scrapers.setting import SELENIUM_DRIVER_EXECUTABLE_PATH
+import logging, csv, time
+from aldi import click
 
 logging.basicConfig(level=logging.INFO)
 DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
-def get_categories(driver):
-    """Returns the a dictionary of the category an their url"""
+def get_subcategories(driver):
+    """Returns the a list of dictionaries containing the category, subcategory and subcategory URL"""
 
     driver.get("https://www.woolworths.com.au")
 
-    WebDriverWait(driver, 60).until(
-        EC.visibility_of_all_elements_located(
+    category_element = WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(mark)(
             (
                 By.XPATH,
-                "//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials'))]",
+                "//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials')) and not(contains(text(), 'Front of Store'))]",
             )
         )
     )
-    category_elements = driver.find_elements(
-        by=By.XPATH,
-        value="//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials')) and not(contains(text(), 'Front of Store'))]",
-    )
-    category_dict = {}
-    logging.info("Getting Categories and URL")
-    for element in category_elements:
+
+    subcategories_list = []
+    logging.info("Getting categories, subcategories and URL...")
+    for category_elem in category_elements:
         url = element.get_attribute("href")
         category = element.text
         category_dict[category] = url
@@ -90,7 +85,7 @@ def scrape_category(driver, category, category_url, file):
     """Scrape category and outputs it in file"""
     driver.get(category_url)
 
-    with open(file, "w") as csv_file:
+    with open(file, "a") as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(
             ("Name", "Category", "Price", "Cup Price", "Product_URL", "Product_ID")
@@ -141,4 +136,5 @@ if __name__ == "__main__":
     driver = webdriver.Chrome(service=service)
     driver.maximize_window()  # more products are rendered in bigger window
 
-    scrape_woolworths(driver)
+    # scrape_woolworths(driver)
+    get_categories(driver)
