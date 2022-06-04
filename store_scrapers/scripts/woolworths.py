@@ -6,7 +6,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
 from scrapy.selector import Selector
 from selenium.webdriver.chrome.service import Service
-import logging, csv, time
+from csv import writer
+import logging, time
 from aldi import click
 
 logging.basicConfig(level=logging.INFO)
@@ -71,7 +72,7 @@ def extract_product_id(url):
         return url
 
 
-def extract_products(category, page):
+def extract_products(category, subcategory, page):
     """Returns list of tuples containing the product details in a page"""
 
     page_response = Selector(text=page)
@@ -100,58 +101,72 @@ def extract_products(category, page):
         product_id = extract_product_id(url)
 
         page_products.append(
-            (name, category, price, cup_price, product_url, product_id)
+            (name, category, subcategory, price, cup_price, product_url, product_id)
         )
     return page_products
 
 
-def scrape_category(driver, category, category_url, file):
-    """Scrape category and outputs it in file"""
-    driver.get(category_url)
+def scrape_subcategory(driver, category, subcategory, subcategory_url, csv_writer):
+    """Scrape subcategory products and writes to a csvfile"""
+    driver.get(subcategory_url)
 
-    with open(file, "a") as csv_file:
-        writer = csv.writer(csv_file)
-        writer.writerow(
-            ("Name", "Category", "Price", "Cup Price", "Product_URL", "Product_ID")
+    page_num = 1
+    while True:
+        logging.info(
+            f"Extracting products from {category}: {subcategory} page {page_num}..."
         )
-        page_num = 1
-        while True:
-            logging.info(f"Extracting products from {category} page {page_num}...")
 
-            time.sleep(25)  #  wait for products to load
-            try:
-                next_page = WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, "//a[@class='paging-next ng-star-inserted']")
-                    )
+        time.sleep(25)  #  wait for products to load
+        try:
+            next_page = WebDriverWait(driver, 30).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//a[@class='paging-next ng-star-inserted']")
                 )
-                last_page = False
-            except:
-                logging.info(f"Last page in {category}")
-                last_page = True
-
-            page_products = extract_products(
-                category, driver.page_source.encode("utf-8")
             )
+            last_page = False
+        except:
+            logging.info(f"Last page in {category}")
+            last_page = True
 
-            writer.writerows(page_products)
+        page_products = extract_products(
+            category, subcategory, driver.page_source.encode("utf-8")
+        )
 
-            page_num += 1
+        csv_writer.writerows(page_products)
 
-            if last_page:
-                break
-            action = ActionChains(driver)
-            action.move_to_element(to_element=next_page)
-            action.click()
-            action.perform()
+        page_num += 1
+
+        if last_page:
+            break
+        action = ActionChains(driver)
+        action.move_to_element(to_element=next_page)
+        action.click()
+        action.perform()
 
 
-def scrape_woolworths(driver):
-    categories = get_categories(driver)
+def scrape_woolworths(driver, output_csv):
+    subcategories_list = get_subcategories(driver)
 
-    for category, category_url in categories.items():
-        filename = f"woolworths_{''.join(category.split()).lower()}.csv"
-        scrape_category(driver, category, category_url, filename)
+    with open(output_csv, "a") as csv_file:
+        headers = (
+            "Name",
+            "Category",
+            "Subcategory",
+            "Price",
+            "Cup Price",
+            "Product_URL",
+            "Product_ID",
+        )
+        csv_writer = writer.writerow(headers)
+
+        for subcategory_dict in subcategories_list:
+            category = subcategory_dict["category"]
+            subcategory = subcategory_dict["subcategory"]
+            subcategory_url = subcategory_dict["subcategory_url"]
+
+            scrape_subcategory(
+                driver, category, subcategory, subcategory_url, csv_writer
+            )
 
 
 if __name__ == "__main__":
@@ -160,5 +175,4 @@ if __name__ == "__main__":
     driver = webdriver.Chrome(service=service)
     driver.maximize_window()  # more products are rendered in bigger window
 
-    # scrape_woolworths(driver)
-    get_subcategories(driver)
+    scrape_woolworths(driver)

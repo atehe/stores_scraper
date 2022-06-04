@@ -5,9 +5,9 @@ The code is written with python so ensure you have it installed in the environme
 
 **Installing Dependencies** 
 
-Dependencies are best installed in a virtual environment. They can be installed by running the command below
+Dependencies are best installed in a virtual environment and  installed by running the command below
 ```
-pip install -r requirements.text
+pip install -r requirements.txt
 ```
 
 ## Usage

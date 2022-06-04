@@ -153,6 +153,7 @@ def extract_product_id(url):
 
 
 def extract_details(page, csv_writer, category, subcategory, category_shopping_group):
+    """writes extracted products to an open csv file writer passed as argument"""
 
     page_response = Selector(text=page.encode("utf8"))
 
