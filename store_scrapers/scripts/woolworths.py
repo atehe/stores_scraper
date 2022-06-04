@@ -14,26 +14,50 @@ DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def get_subcategories(driver):
-    """Returns the a list of dictionaries containing the category, subcategory and subcategory URL"""
+    """Returns a list of dictionaries containing the category, subcategory and subcategory URL"""
 
     driver.get("https://www.woolworths.com.au")
 
-    category_element = WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(mark)(
+    WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable(
             (
                 By.XPATH,
                 "//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials')) and not(contains(text(), 'Front of Store'))]",
             )
         )
     )
+    category_elements = driver.find_elements(
+        by=By.XPATH,
+        value="//a[@aria-controls='categoryHeader-menu' and not(contains(text(), 'Specials')) and not(contains(text(), 'Front of Store'))]",
+    )
 
     subcategories_list = []
     logging.info("Getting categories, subcategories and URL...")
     for category_elem in category_elements:
-        url = element.get_attribute("href")
-        category = element.text
-        category_dict[category] = url
-    return category_dict
+        category = category_elem.text
+        click(category_elem, driver)
+        subcategory_elements = driver.find_elements(
+            by=By.XPATH, value="//ul[@class='categoriesNavigation-list']//a"
+        )
+        for subcategory_elem in subcategory_elements:
+            subcategory = subcategory_elem.text
+            subcategory_url = subcategory_elem.get_attribute("href")
+            logging.info(
+                {
+                    "category": category,
+                    "subcategory": subcategory,
+                    "subcategory_url": subcategory_url,
+                }
+            )
+
+            subcategories_list.append(
+                {
+                    "category": category,
+                    "subcategory": subcategory,
+                    "subcategory_url": subcategory_url,
+                }
+            )
+    return subcategories_list
 
 
 def extract_product_id(url):
@@ -137,4 +161,4 @@ if __name__ == "__main__":
     driver.maximize_window()  # more products are rendered in bigger window
 
     # scrape_woolworths(driver)
-    get_categories(driver)
+    get_subcategories(driver)
