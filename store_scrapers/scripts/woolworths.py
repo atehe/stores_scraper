@@ -148,6 +148,7 @@ def scrape_woolworths(driver, output_csv):
     subcategories_list = get_subcategories(driver)
 
     with open(output_csv, "a") as csv_file:
+        csv_writer = writer(csv_file)
         headers = (
             "Name",
             "Category",
@@ -157,7 +158,7 @@ def scrape_woolworths(driver, output_csv):
             "Product_URL",
             "Product_ID",
         )
-        csv_writer = writer.writerow(headers)
+        csv_writer.writerow(headers)
 
         for subcategory_dict in subcategories_list:
             category = subcategory_dict["category"]
@@ -175,4 +176,4 @@ if __name__ == "__main__":
     driver = webdriver.Chrome(service=service)
     driver.maximize_window()  # more products are rendered in bigger window
 
-    scrape_woolworths(driver)
+    scrape_woolworths(driver, "wooly.csv")
