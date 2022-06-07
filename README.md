@@ -1,14 +1,15 @@
 # STORE SCRAPER
 
-## Setup
-The code is written with python so ensure you have it installed in the environment you wish to run the scrapers
+## Requirements
+- Python 3.6+
+- Chrome Version 101.0.4951.64
+- Other python libraries
 
-**Installing Dependencies** 
-
-Dependencies are best installed in a virtual environment and  installed by running the command below
+## Installation
 ```
 pip install -r requirements.txt
 ```
 
 ## Usage
+
 
