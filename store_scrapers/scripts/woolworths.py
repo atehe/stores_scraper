@@ -100,6 +100,8 @@ def extract_products(category, subcategory, page):
         product_url = f"http://www.woolworths.com.au{url}"
         product_id = extract_product_id(url)
 
+        print(name, category, subcategory, price, cup_price, product_url, product_id)
+
         page_products.append(
             (name, category, subcategory, price, cup_price, product_url, product_id)
         )
@@ -115,10 +117,14 @@ def scrape_subcategory(driver, category, subcategory, subcategory_url, csv_write
         logging.info(
             f"Extracting products from {category}: {subcategory} page {page_num}..."
         )
+        WebDriverWait(driver, 60).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//div[@class='shelfProductTile-information']")
+            )
+        )  # wait for products to load
 
-        time.sleep(25)  #  wait for products to load
         try:
-            next_page = WebDriverWait(driver, 30).until(
+            next_page = WebDriverWait(driver, 2).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, "//a[@class='paging-next ng-star-inserted']")
                 )
@@ -142,6 +148,7 @@ def scrape_subcategory(driver, category, subcategory, subcategory_url, csv_write
         action.move_to_element(to_element=next_page)
         action.click()
         action.perform()
+        time.sleep(2)
 
 
 def scrape_woolworths(driver, output_csv):
@@ -160,7 +167,7 @@ def scrape_woolworths(driver, output_csv):
         )
         csv_writer.writerow(headers)
 
-        for subcategory_dict in subcategories_list:
+        for subcategory_dict in subcategories_list[1:]:
             category = subcategory_dict["category"]
             subcategory = subcategory_dict["subcategory"]
             subcategory_url = subcategory_dict["subcategory_url"]
