@@ -188,7 +188,7 @@ def scrape_woolworths(driver, output_csv):
         )
         csv_writer.writerow(headers)
 
-        for subcategory_dict in subcategories_list[113:]:
+        for subcategory_dict in subcategories_list[111:]:
             category = subcategory_dict["category"]
             subcategory = subcategory_dict["subcategory"]
             subcategory_url = subcategory_dict["subcategory_url"]
