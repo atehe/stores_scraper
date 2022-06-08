@@ -33,7 +33,7 @@ def get_subcategories(driver):
     )
 
     subcategories_list = []
-    logging.info("Getting categories, subcategories and URL...")
+    logging.info(">>> Extracting categories, subcategories and URL...")
     for category_elem in category_elements:
         category = category_elem.text
         click(category_elem, driver)
@@ -43,7 +43,7 @@ def get_subcategories(driver):
         for subcategory_elem in subcategory_elements:
             subcategory = subcategory_elem.text
             subcategory_url = subcategory_elem.get_attribute("href")
-            logging.info(
+            logging.debug(
                 {
                     "category": category,
                     "subcategory": subcategory,
@@ -58,6 +58,7 @@ def get_subcategories(driver):
                     "subcategory_url": subcategory_url,
                 }
             )
+    logging.info(">>> Subcategories extraction complete.")
     return subcategories_list
 
 
@@ -100,7 +101,9 @@ def extract_products(category, subcategory, page):
         product_url = f"http://www.woolworths.com.au{url}"
         product_id = extract_product_id(url)
 
-        print(name, category, subcategory, price, cup_price, product_url, product_id)
+        logging.debug(
+            f">>> {name}, {category}, {subcategory}, {price}, {cup_price}, {product_url}, {product_id}"
+        )
 
         page_products.append(
             (name, category, subcategory, price, cup_price, product_url, product_id)
@@ -113,15 +116,28 @@ def scrape_subcategory(driver, category, subcategory, subcategory_url, csv_write
     driver.get(subcategory_url)
 
     page_num = 1
+    continue_count = 0
     while True:
         logging.info(
-            f"Extracting products from {category}: {subcategory} page {page_num}..."
+            f">>> Extracting products from {category}: {subcategory} page {page_num}..."
         )
-        WebDriverWait(driver, 60).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, "//div[@class='shelfProductTile-information']")
+        try:
+            # wait for products to load
+            WebDriverWait(driver, 60).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//div[@class='shelfProductTile-information']")
+                )
             )
-        )  # wait for products to load
+        except:
+            logging.critical(">>> Error while waiting. Retrying...")
+            current_url = driver.current_url
+            driver.get(current_url)
+
+            # prevent unending error loop
+            continue_count += 1
+            if continue_count > 5:
+                break
+            continue
 
         try:
             next_page = WebDriverWait(driver, 2).until(
@@ -131,7 +147,6 @@ def scrape_subcategory(driver, category, subcategory, subcategory_url, csv_write
             )
             last_page = False
         except:
-            logging.info(f"Last page in {category}")
             last_page = True
 
         page_products = extract_products(
@@ -143,6 +158,7 @@ def scrape_subcategory(driver, category, subcategory, subcategory_url, csv_write
         page_num += 1
 
         if last_page:
+            logging.info(f">>> {subcategory} scraping complete")
             break
         action = ActionChains(driver)
         action.move_to_element(to_element=next_page)
@@ -167,7 +183,7 @@ def scrape_woolworths(driver, output_csv):
         )
         csv_writer.writerow(headers)
 
-        for subcategory_dict in subcategories_list[1:]:
+        for subcategory_dict in subcategories_list[83:]:
             category = subcategory_dict["category"]
             subcategory = subcategory_dict["subcategory"]
             subcategory_url = subcategory_dict["subcategory_url"]
@@ -182,5 +198,7 @@ if __name__ == "__main__":
     service = Service(DRIVER_EXECUTABLE_PATH)
     driver = webdriver.Chrome(service=service)
     driver.maximize_window()  # more products are rendered in bigger window
-
     scrape_woolworths(driver, "wooly.csv")
+
+
+## frozen seafood https://www.woolworths.com.au/shop/browse/freezer/frozen-seafood
