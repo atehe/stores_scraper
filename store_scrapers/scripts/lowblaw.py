@@ -12,10 +12,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from fake_useragent import UserAgent
 import undetected_chromedriver as uc
+from aldi import DRIVER_EXECUTABLE_PATH
 
 
 logging.basicConfig(level=logging.INFO)
-DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def hover(driver, element):
@@ -26,12 +26,19 @@ def hover(driver, element):
 
 
 def extract_product_id(url):
+    """Returns product id from URL"""
     last_slash_index = url[::-1].index("/")
     return url[-last_slash_index:]
 
 
 def load_all(driver):
-    load_more_click_count = 0
+    """
+    Clicks the load more button till page is loaded completely.
+    if page driver/browser keeps crashing it is mostlikely due to ram issues when there are plenty pages are loaded.
+    In that case  a system with higher RAM is needed or you could
+    uncomment the commented code in this function to limit the amount of pages loaded
+    """
+    # load_more_click_count = 0
     while True:
         try:
             load_more = WebDriverWait(driver, 5).until(
@@ -43,16 +50,22 @@ def load_all(driver):
                 )
             )
             click(load_more, driver)
-            if load_more_click_count == 19:
-                logging.critical("ending scroll...")  # page crashes after 20 clicks
-            break
-            load_more_click_count += 1
-        #
+
+            # if load_more_click_count == 19:
+            #     logging.critical("ending scroll...")
+            # break
+            # load_more_click_count += 1
+
         except:
             break
 
 
 def parse_nav_dept(driver, dept_data_code, output_list):
+    """
+    Hovers through the department in the nav bar
+    to extract the category, subcategory and subcategories URL
+    and append to list of dictionaries
+    """
 
     dept = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
@@ -85,6 +98,14 @@ def parse_nav_dept(driver, dept_data_code, output_list):
                 by=By.XPATH, value="./a"
             ).get_attribute("href")
 
+            logging.debug(
+                {
+                    "category": category,
+                    "subcategory": subcategory,
+                    "subcategory_url": subcategory_url,
+                }
+            )
+
             output_list.append(
                 {
                     "category": category,
@@ -95,6 +116,7 @@ def parse_nav_dept(driver, dept_data_code, output_list):
 
 
 def get_subcategories(driver):
+    """Returns the category, subcategory and subcategory URL as a list of dictionary"""
     driver.maximize_window()
     driver.get("https://www.loblaws.ca/")
     WebDriverWait(driver, 120).until(
@@ -110,6 +132,7 @@ def get_subcategories(driver):
 
 
 def extract_products(driver, category, subcategory, subcategory_url, csv_writer):
+    """Extracts products to an open csv writer"""
     driver.get(subcategory_url)
     try:
         WebDriverWait(driver, 30).until(
@@ -129,19 +152,13 @@ def extract_products(driver, category, subcategory, subcategory_url, csv_writer)
             "//li[@class='product-tile-group__list__item']"
         )
     except:
-        with open("log.csv", "a") as logfile:
+        # logs the pages that crashed
+        with open("utils/lowblaw_log.csv", "a") as logfile:
             log_writer = writer(logfile)
             log_writer.writerow((category, subcategory, subcategory_url))
 
+        logging.crtical(f">>> Page crash... URL: {subcategory_url}")
         products = []
-
-        #  restart driver if page crashes
-        # driver.quit()
-        # driver = None
-        # logging.critical("restarting driver...")
-        # driver = webdriver.Chrome(
-        #     service=service,
-        # )
 
     for product in products:
 
@@ -161,6 +178,10 @@ def extract_products(driver, category, subcategory, subcategory_url, csv_writer)
             product_url = f"https://www.loblaws.ca{product_url}"
         product_id = extract_product_id(product_url)
 
+        logging.debug(
+            f">>> {(name, brand, category, subcategory, product_url, product_id)}"
+        )
+
         csv_writer.writerow(
             (name, brand, category, subcategory, product_url, product_id)
         )
@@ -178,11 +199,12 @@ def scrape_loblaws(driver, output_csv):
             "product url",
             "product_id",
         )
-        csv_writer.writerow(headers)
+        if os.stat(output_csv).st_size == 0:
+            csv_writer.writerow(headers)
 
         output_list = get_subcategories(driver)
 
-        for subcategories_dict in output_list[177:]:
+        for subcategories_dict in output_list:
             category = subcategories_dict["category"]
             subcategory = subcategories_dict["subcategory"]
             subcategory_url = subcategories_dict["subcategory_url"]
@@ -191,13 +213,10 @@ def scrape_loblaws(driver, output_csv):
 
 if __name__ == "__main__":
 
+    output_csv = sys.argv[-1]
+
     service = Service(DRIVER_EXECUTABLE_PATH)
     driver = webdriver.Chrome(
         service=service,
     )
-    # ua = UserAgent()
-    # OPTS = Options()
-    # OPTS.add_argument(f"user-agent={ua.random}")
-    # driver = uc.Chrome(version_main=100, options=OPTS)
-
-    scrape_loblaws(driver, "loblaws_products.csv")
+    scrape_loblaws(driver, output_csv)

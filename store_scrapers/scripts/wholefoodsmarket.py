@@ -9,13 +9,14 @@ from selenium.webdriver.chrome.options import Options
 from store_scrapers.settings import SELENIUM_DRIVER_EXECUTABLE_PATH
 import logging, json, os, sys, time, random
 from selenium import webdriver
+from aldi import DRIVER_EXECUTABLE_PATH
 
 
 logging.basicConfig(level=logging.INFO)
-DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def load_all_products(driver):
+    """Clicks loadmore till all products are loaded"""
     while True:
         try:
             load_more = WebDriverWait(driver, 3).until(
@@ -30,6 +31,7 @@ def load_all_products(driver):
 
 
 def set_location(driver, postal_code):
+    """Sets a location based on postal code for prices to be displayed"""
     try:
         location_popup = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(
@@ -49,6 +51,8 @@ def set_location(driver, postal_code):
 
 
 def extract_products(category, subcategory, csv_writer, page):
+    """Extracts products from page to an open csv writer"""
+
     page_response = Selector(text=page.encode("utf8"))
     products = page_response.xpath("//div[@data-testid='product-tile']")
 
@@ -79,6 +83,7 @@ def extract_products(category, subcategory, csv_writer, page):
 
 
 def get_categories_dict(driver):
+    """Returns the a dictiory wih keys as the category and values as the category url"""
     driver.get("https://www.wholefoodsmarket.com/products")
     category_elements = driver.find_elements(
         by=By.XPATH,
@@ -89,11 +94,12 @@ def get_categories_dict(driver):
         category = element.find_element(by=By.XPATH, value=".//span").text
         category_url = element.get_attribute("href")
         categories_dict[category] = category_url
-    print(categories_dict)
+
     return categories_dict
 
 
 def parse_subcategories(driver, category, category_url, csv_writer):
+    """Navigates and extracts products from the subcategories in a category"""
     driver.get(category_url)
 
     subcategory_elements = driver.find_elements(
@@ -138,7 +144,8 @@ def scrape_wholefoodsmarket(driver, output_csv):
             "ASIN",
             "product_url",
         )
-        csv_writer.writerow(headers)
+        if os.stat(output_csv).st_size == 0:
+            csv_writer.writerow(headers)
 
         subcategories_dict = get_categories_dict(driver)
         for category, category_url in subcategories_dict.items():
@@ -146,6 +153,7 @@ def scrape_wholefoodsmarket(driver, output_csv):
 
 
 if __name__ == "__main__":
+    output_csv = sys.argv[-1]
 
     service = Service(DRIVER_EXECUTABLE_PATH)
     driver = webdriver.Chrome(service=service)
@@ -153,4 +161,4 @@ if __name__ == "__main__":
     driver.get("https://www.wholefoodsmarket.com/products")
     driver.maximize_window()
     set_location(driver, 600)
-    scrape_wholefoodsmarket(driver, "wholefoods.csv")
+    scrape_wholefoodsmarket(driver, output_csv)

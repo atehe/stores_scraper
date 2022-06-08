@@ -8,10 +8,9 @@ from scrapy.selector import Selector
 from selenium.webdriver.chrome.service import Service
 from csv import writer
 import logging, time
-from aldi import click
+from aldi import click, DRIVER_EXECUTABLE_PATH
 
 logging.basicConfig(level=logging.INFO)
-DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def get_subcategories(driver):
@@ -168,7 +167,13 @@ def scrape_subcategory(driver, category, subcategory, subcategory_url, csv_write
 
 
 def scrape_woolworths(driver, output_csv):
-    subcategories_list = get_subcategories(driver)
+    subcategories_list = get_subcategories(driver) + [
+        {
+            "category": "Frozen",
+            "subcategory": "Seafood",
+            "subcategory_url": "https://www.woolworths.com.au/shop/browse/freezer/frozen-seafood",
+        }
+    ]
 
     with open(output_csv, "a") as csv_file:
         csv_writer = writer(csv_file)
@@ -183,7 +188,7 @@ def scrape_woolworths(driver, output_csv):
         )
         csv_writer.writerow(headers)
 
-        for subcategory_dict in subcategories_list[83:]:
+        for subcategory_dict in subcategories_list[113:]:
             category = subcategory_dict["category"]
             subcategory = subcategory_dict["subcategory"]
             subcategory_url = subcategory_dict["subcategory_url"]

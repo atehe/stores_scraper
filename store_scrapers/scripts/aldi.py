@@ -4,13 +4,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from scrapy.selector import Selector
 from csv import writer
-import time, logging
+import time, logging, sys
 
 logging.basicConfig(level=logging.INFO)
+DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
 
 
 def excluded_keyword_in(word, excluded_tags):
-    """Returns True if  any excluded tag is in word"""
+    """Returns True if  an excluded keyword is in word"""
     for tag in excluded_tags:
         if tag.lower() in word.lower():
             return True
@@ -41,7 +42,7 @@ def handle_cookies(driver):
 
 
 def get_subcategories(driver):
-    """Returns list of all subcategory (subcategory url, subcategory group and category) from menu"""
+    """Returns list of dictionaries containing subcategory url, subcategory, shopping group and category"""
 
     driver.get("https://www.aldi.co.uk/")
 
@@ -58,6 +59,8 @@ def get_subcategories(driver):
         by=By.XPATH,
         value="//li[@class='header__item header__item--nav slim-fit js-list-toggle text-uppercase']",
     )
+
+    # tags of full categories or ads categories(needed are subcategories)
     excluded_tags = [
         "all ",
         " all",
@@ -107,6 +110,15 @@ def get_subcategories(driver):
                 if excluded_keyword_in(subcategory, excluded_tags):
                     continue
 
+                logging.debug(
+                    {
+                        "category": category,
+                        "category_shopping_group": group_name,
+                        "subcategory": subcategory,
+                        "subcategory_url": subcategory_url,
+                    }
+                )
+
                 url_list.append(
                     {
                         "category": category,
@@ -139,7 +151,7 @@ def load_all_products(url, driver):
         except:
             break
 
-    logging.debug("Page load complete")
+    logging.debug(">>> page loading complete")
     return driver.page_source
 
 
@@ -153,13 +165,13 @@ def extract_product_id(url):
 
 
 def extract_details(page, csv_writer, category, subcategory, category_shopping_group):
-    """writes extracted products to an open csv file writer passed as argument"""
+    """writes extracted products to an open csv file writer"""
 
     page_response = Selector(text=page.encode("utf8"))
 
     products = page_response.xpath("//div[contains(@class,'hover-item')]")
     if products:
-        logging.info(f"Scraping {subcategory} in {category}...")
+        logging.info(f">>> Scraping {subcategory} in {category}...")
     for product in products:
         url = product.xpath(".//a[@class='category-item__link']/@href").get()
         if not url.startswith("http"):
@@ -179,6 +191,10 @@ def extract_details(page, csv_writer, category, subcategory, category_shopping_g
 
         rating = product.xpath(".//a[@itemprop='aggregateRating']/@aria-label").get()
         product_id = extract_product_id(url)
+
+        logging.debug(
+            f">>> {name}, {category.title()}, {subcategory}, {category_shopping_group}, {product_id}, {url}, {price}, {rating}"
+        )
 
         csv_writer.writerow(
             (
@@ -208,7 +224,8 @@ def scrape_aldi(driver, subcategories_url, output_csv):
             "Price",
             "Rating",
         )
-        csv_writer.writerow(headers)
+        if os.stat(output_csv).st_size == 0:
+            csv_writer.writerow(headers)
 
         for subcategory_dict in subcategories_url:
             category = subcategory_dict["category"]
@@ -224,7 +241,13 @@ def scrape_aldi(driver, subcategories_url, output_csv):
 
 
 if __name__ == "__main__":
-    driver = webdriver.Chrome()
+
+    output_csv = sys.argv[-1]
+
+    service = Service(DRIVER_EXECUTABLE_PATH)
+    driver = webdriver.Chrome(
+        service=service,
+    )
     subcategories_url = get_subcategories(driver)
 
-    scrape_aldi(driver, subcategories_url, "aldi.csv")
+    scrape_aldi(driver, subcategories_url, output_csv)
