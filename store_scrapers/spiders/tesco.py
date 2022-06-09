@@ -50,7 +50,7 @@ class TescoSpider(scrapy.Spider):
             category = category_element.find_element(by=By.XPATH, value="./a/span").text
             category = clean_category_name(category)
 
-            time.sleep(2)
+            time.sleep(1)
 
             subcategories_element = category_element.find_elements(
                 by=By.XPATH, value=".//li[contains(@class, 'menu__item--department')]"
@@ -71,7 +71,7 @@ class TescoSpider(scrapy.Spider):
                     }
                 )
 
-        for subcategory_dict in subcategory_list[:2]:
+        for subcategory_dict in subcategory_list:
             yield SeleniumRequest(
                 url=subcategory_dict["subcategory_url"],
                 callback=self.get_products_page_url,
@@ -107,12 +107,12 @@ class TescoSpider(scrapy.Spider):
             ).get()
             price = "".join(
                 product.xpath(
-                    ".//div[contains(@class,'price-per-sellable')]//text()"
+                    ".//p[contains(@class,'price__text')]//text()"
                 ).getall()
             )
             cup_price = "".join(
                 product.xpath(
-                    ".//div[@class='price-per-quantity-weight']//text()"
+                    ".//p[contains(@class,'price__subtext')]//text()"
                 ).getall()
             )
             product_id = extract_product_id(rel_url)
