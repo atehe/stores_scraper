@@ -19,6 +19,7 @@ EXTRACTED_URLS = "./utils/kroger/extracted_url.txt"  # contains urls of pages ex
 
 
 def page_num_in_url(url):
+    """Extracts the page number in URL to be used to resume scraper"""
     try:
         num_start_index = url.index("=") + 1
         return int(url[num_start_index:])
@@ -27,7 +28,7 @@ def page_num_in_url(url):
 
 
 def get_last_extracted_url(extracted_urls, base_url):
-    """git sReturns the last extracted page url of a base url(subcategory)"""
+    """Returns the last extracted page url of a base url(subcategory)"""
     try:
         contains_base_url = [url for url in extracted_urls if url.startswith(base_url)]
         last_extracted_url = max(contains_base_url, key=page_num_in_url)
@@ -141,7 +142,7 @@ def extract_products(
     subcategory,
     log_object,
 ):
-    """Write all products in a subcategory with a csv_writer to file"""
+    """Write all extracted products data in a subcategory with a csv_writer to file"""
 
     page_num = page_num_in_url(driver.current_url)
     while True:
@@ -261,7 +262,8 @@ def scrape_kroger(driver, subcategories_list, output_csv):
     with open(output_csv, "a") as csv_file, open(EXTRACTED_URLS, "a") as log_object:
         csv_writer = writer(csv_file)
         headers = ("name", "subcategory", "category", "product_id", "url", "price")
-        csv_writer.writerow(headers)
+        if os.stat(output_csv).st_size == 0:
+            csv_writer.writerow(headers)
 
         for subcategory_dict in subcategories_list:
             category = subcategory_dict["category"]

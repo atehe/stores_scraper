@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from scrapy.selector import Selector
 from selenium.webdriver.chrome.service import Service
 from csv import writer
-import logging, time
+import logging, time, sys, os 
 from aldi import click, DRIVER_EXECUTABLE_PATH
 
 logging.basicConfig(level=logging.INFO)
@@ -186,9 +186,10 @@ def scrape_woolworths(driver, output_csv):
             "Product_URL",
             "Product_ID",
         )
-        csv_writer.writerow(headers)
+        if os.stat(output_csv).st_size == 0:
+            csv_writer.writerow(headers)
 
-        for subcategory_dict in subcategories_list[111:]:
+        for subcategory_dict in subcategories_list:
             category = subcategory_dict["category"]
             subcategory = subcategory_dict["subcategory"]
             subcategory_url = subcategory_dict["subcategory_url"]
@@ -199,11 +200,12 @@ def scrape_woolworths(driver, output_csv):
 
 
 if __name__ == "__main__":
+    output_csv = sys.argv[-1]
+
     # driver configs
     service = Service(DRIVER_EXECUTABLE_PATH)
     driver = webdriver.Chrome(service=service)
     driver.maximize_window()  # more products are rendered in bigger window
-    scrape_woolworths(driver, "wooly.csv")
+    scrape_woolworths(driver, output_csv)
 
 
-## frozen seafood https://www.woolworths.com.au/shop/browse/freezer/frozen-seafood
