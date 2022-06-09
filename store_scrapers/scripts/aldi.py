@@ -4,7 +4,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from scrapy.selector import Selector
 from csv import writer
-import time, logging, sys
+import time, logging, sys, os
+from selenium.webdriver.chrome.service import Service
 
 logging.basicConfig(level=logging.INFO)
 DRIVER_EXECUTABLE_PATH = "./utils/chromedriver"
@@ -60,7 +61,7 @@ def get_subcategories(driver):
         value="//li[@class='header__item header__item--nav slim-fit js-list-toggle text-uppercase']",
     )
 
-    # tags of full categories or ads categories(needed are subcategories)
+    # tags are contained in full categories or ads categories(needed are subcategories)
     excluded_tags = [
         "all ",
         " all",
@@ -79,7 +80,7 @@ def get_subcategories(driver):
         ).text
 
         click(category_item, driver)
-        logging.info(f"Getting subcategories for {category.title()}")
+        logging.info(f">>> Getting subcategories for {category.title()}")
 
         category_shopping_groups = driver.find_elements(
             by=By.XPATH,

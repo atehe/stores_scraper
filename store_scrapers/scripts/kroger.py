@@ -1,13 +1,14 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 from aldi import click, excluded_keyword_in
 from scrapy.selector import Selector
 from selenium.webdriver.common.action_chains import ActionChains
 from csv import writer
-from selenium.webdriver.chrome.options import Options
-from fake_useragent import UserAgent
 import undetected_chromedriver as uc
+from fake_useragent import UserAgent
+from selenium.webdriver.chrome.options import Options
 import logging, json, os, sys, time, random
 
 logging.basicConfig(level=logging.INFO)
@@ -111,7 +112,7 @@ def get_subcategories(driver):
             subcategory_url = subcategory_item.get_attribute("href")
             if excluded_keyword_in(subcategory, excluded_tags):
                 continue
-            logging.info(f"{subcategory}: {subcategory_url}")
+            logging.info(f">>> Getting {category}: {subcategory}...")
             url_list.append(
                 {
                     "category": category,
@@ -287,12 +288,15 @@ def scrape_kroger(driver, subcategories_list, output_csv):
 
 
 if __name__ == "__main__":
-    # random useragents to use with chrome
+    output_csv = sys.argv[-1]
+    
+    # random user agents to use
     ua = UserAgent()
     OPTS = Options()
     OPTS.add_argument(f"user-agent={ua.random}")
 
     driver = uc.Chrome(version_main=100, options=OPTS)
+
     if not os.path.exists("./utils/kroger"):  # folder to store script files
         os.mkdir("./utils/kroger")
 
@@ -302,5 +306,5 @@ if __name__ == "__main__":
     scrape_kroger(
         driver,
         subcategories,
-        "kroger_products_trial.csv",
+        output_csv,
     )

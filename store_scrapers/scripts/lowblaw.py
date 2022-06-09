@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.service import Service
 from fake_useragent import UserAgent
 import undetected_chromedriver as uc
 from aldi import DRIVER_EXECUTABLE_PATH
+from selenium.webdriver.chrome.service import Service
 
 
 logging.basicConfig(level=logging.INFO)
@@ -185,7 +186,7 @@ def extract_products(driver, category, subcategory, subcategory_url, csv_writer)
         csv_writer.writerow(
             (name, brand, category, subcategory, product_url, product_id)
         )
-    logging.info(f"Extracted {category}: {subcategory}")
+    logging.info(f">>> Extracted {category}: {subcategory}")
 
 
 def scrape_loblaws(driver, output_csv):

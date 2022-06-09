@@ -6,10 +6,10 @@ from scrapy.selector import Selector
 from selenium.webdriver.common.action_chains import ActionChains
 from csv import writer
 from selenium.webdriver.chrome.options import Options
-from store_scrapers.settings import SELENIUM_DRIVER_EXECUTABLE_PATH
 import logging, json, os, sys, time, random
 from selenium import webdriver
 from aldi import DRIVER_EXECUTABLE_PATH
+from selenium.webdriver.chrome.service import Service
 
 
 logging.basicConfig(level=logging.INFO)
@@ -79,7 +79,7 @@ def extract_products(category, subcategory, csv_writer, page):
             (name, brand, category, subcategory, regular_price, ASIN, product_url)
         )
 
-    logging.info(f"Extraction complete for {category}: {subcategory}...")
+    logging.info(f">>> Extraction complete for {category}: {subcategory}...")
 
 
 def get_categories_dict(driver):
